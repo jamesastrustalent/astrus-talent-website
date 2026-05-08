@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Current Opportunities | Astrus Talent</title>
+  <meta name="description" content="Browse current data center and mission critical recruitment opportunities from Astrus Talent.">
+  <link rel="canonical" href="https://astrustalent.com/jobs.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+
+    :root {
+      --bg: #0d1117;
+      --card: #161b27;
+      --card2: #1c2235;
+      --card-border: rgba(255,255,255,.08);
+      --blue: #3b82f6;
+      --blue-dim: rgba(59,130,246,.12);
+      --blue-border: rgba(59,130,246,.3);
+      --text: #e2e8f0;
+      --muted: #8b9ab0;
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h); z-index: 100;
+      background: rgba(13,17,23,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100% }
+    .wordmark { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; color: #fff }
+    .wordmark .dot { color: var(--blue) }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s }
+    .nav-links a:hover, .nav-links a.active { color: #fff }
+    .btn-nav {
+      background: var(--blue); color: #fff;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px;
+      padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-nav:hover { background: #2563eb }
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px }
+    .mobile-menu {
+      display: none; flex-direction: column; gap: 4px;
+      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+      background: #0d1117; border-bottom: 1px solid var(--card-border);
+      padding: 20px 32px 28px;
+    }
+    .mobile-menu.open { display: flex }
+    .mob-link { font-size: 16px; font-weight: 500; color: var(--muted); padding: 10px 0; border-bottom: 1px solid var(--card-border) }
+    .mob-link:hover { color: #fff }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: calc(var(--nav-h) + 72px) 0 64px;
+      text-align: center;
+    }
+    .page-eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+    }
+    .page-header h1 { font-size: clamp(36px, 5vw, 54px); margin-bottom: 16px }
+    .page-header p { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto }
+
+    /* ── JOB CARDS (list view) ── */
+    .jobs-grid { display: flex; flex-direction: column; gap: 16px; padding-bottom: 100px }
+
+    .job-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      display: flex; align-items: center; gap: 24px;
+      transition: border-color .2s, transform .2s;
+      cursor: pointer;
+    }
+    .job-card:hover { border-color: var(--blue-border); transform: translateY(-1px) }
+
+    .job-card-body { flex: 1 }
+    .job-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px }
+    .job-card-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px }
+    .meta-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 4px 12px; font-size: 13px; color: var(--muted);
+    }
+    .meta-tag.salary { background: var(--blue-dim); border-color: var(--blue-border); color: var(--blue) }
+
+    .job-card-arrow {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--blue-dim); border: 1px solid var(--blue-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue); flex-shrink: 0; transition: background .2s;
+    }
+    .job-card:hover .job-card-arrow { background: var(--blue); color: #fff }
+
+    /* ── EMPTY / LOADING ── */
+    .state-box { text-align: center; padding: 80px 20px; color: var(--muted) }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid rgba(59,130,246,.15); border-top-color: var(--blue);
+      border-radius: 50%; animation: spin .75s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg) } }
+
+    /* ── JOB DETAIL (single job view) ── */
+    .job-detail { padding: calc(var(--nav-h) + 48px) 0 80px; max-width: 760px; margin: 0 auto }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--muted); margin-bottom: 32px;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text) }
+
+    .job-detail-header {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 36px 36px 30px; margin-bottom: 20px;
+    }
+    .job-detail-title { font-size: clamp(24px, 4vw, 34px); margin-bottom: 8px }
+    .job-detail-company { font-size: 16px; color: var(--muted); margin-bottom: 20px }
+
+    .section-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 28px 36px; margin-bottom: 16px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 14px;
+    }
+    .section-content {
+      font-size: 15px; line-height: 1.85; color: var(--muted);
+      white-space: pre-wrap; word-break: break-word;
+    }
+
+    .apply-btn-wrap { margin: 28px 0 0 }
+    .btn-apply {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--blue); color: #fff;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px;
+      padding: 15px 32px; border-radius: 10px; border: none; cursor: pointer;
+      transition: background .2s, transform .1s;
+      box-shadow: 0 4px 20px rgba(59,130,246,.35);
+    }
+    .btn-apply:hover { background: #2563eb }
+    .btn-apply:active { transform: scale(.99) }
+
+    /* ── APPLICATION FORM ── */
+    .apply-form-section {
+      display: none;
+      background: var(--card); border: 1px solid var(--blue-border);
+      border-radius: 14px; padding: 36px; margin-top: 16px;
+    }
+    .apply-form-section.visible { display: block }
+    .apply-form-title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .apply-form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+    @media (max-width: 580px) { .form-row { grid-template-columns: 1fr } }
+
+    .form-group { margin-bottom: 18px }
+    .form-label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--muted); margin-bottom: 7px; letter-spacing: .02em;
+    }
+    .req { color: var(--blue) }
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; color: var(--text);
+      font-family: inherit; font-size: 15px; padding: 11px 14px;
+      outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.12) }
+    .form-input::placeholder { color: rgba(139,154,176,.5) }
+    textarea.form-input { resize: none; min-height: 120px; line-height: 1.6 }
+    .form-hint { font-size: 12px; color: var(--muted); margin-top: 5px; opacity: .7 }
+
+    .btn-submit-form {
+      width: 100%; background: var(--blue); color: #fff;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
+      padding: 14px; border-radius: 9px; border: none; cursor: pointer;
+      transition: background .2s; margin-top: 4px;
+      box-shadow: 0 4px 16px rgba(59,130,246,.3);
+    }
+    .btn-submit-form:hover:not(:disabled) { background: #2563eb }
+    .btn-submit-form:disabled { opacity: .55; cursor: not-allowed }
+
+    .privacy-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; opacity: .7 }
+
+    .alert-error {
+      background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2);
+      border-radius: 8px; padding: 12px 16px; font-size: 14px; color: #f87171;
+      margin-bottom: 16px; display: none;
+    }
+
+    .success-box {
+      background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.2);
+      border-radius: 14px; padding: 48px 36px; text-align: center; margin-top: 16px;
+    }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(16,185,129,.12);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; color: #10b981;
+    }
+    .success-title { font-size: 22px; font-family: 'Space Grotesk', sans-serif; margin-bottom: 8px }
+    .success-sub { color: var(--muted); max-width: 380px; margin: 0 auto; font-size: 15px }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 64px 0 40px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand p { color: var(--muted); font-size: 14px; margin-top: 12px; max-width: 220px }
+    .footer-col h4 { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text) }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px }
+    .footer-col ul a { font-size: 14px; color: var(--muted); transition: color .2s }
+    .footer-col ul a:hover { color: var(--text) }
+    .contact-item { font-size: 14px; color: var(--muted) }
+    .contact-item a { transition: color .2s }
+    .contact-item a:hover { color: var(--text) }
+    .footer-quote {
+      border-top: 1px solid var(--card-border); padding-top: 32px;
+      font-size: 14px; color: var(--muted); font-style: italic;
+      margin-bottom: 32px; line-height: 1.7;
+    }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; color: var(--muted);
+    }
+
+    @media (max-width: 960px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px } }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px }
+      .nav-links-desktop { display: none }
+      .nav-toggle { display: flex }
+      .footer-grid { grid-template-columns: 1fr }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center }
+      .job-card { flex-direction: column; align-items: flex-start }
+      .job-card-arrow { display: none }
+      .job-detail-header { padding: 24px }
+      .section-card { padding: 20px 24px }
+      .apply-form-section { padding: 24px }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="wordmark">ASTRUS<span class="dot">.</span></a>
+      <ul class="nav-links nav-links-desktop">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="expertise.html">Expertise</a></li>
+        <li><a href="clients.html">Clients</a></li>
+        <li><a href="candidates.html">Candidates</a></li>
+        <li><a href="jobs.html" class="active">Jobs</a></li>
+        <li><a href="insights.html">Insights</a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="mailto:info@astrustalent.com" class="btn-nav">Get in Touch</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" class="mob-link">Home</a>
+  <a href="about.html" class="mob-link">About</a>
+  <a href="expertise.html" class="mob-link">Expertise</a>
+  <a href="clients.html" class="mob-link">Clients</a>
+  <a href="candidates.html" class="mob-link">Candidates</a>
+  <a href="jobs.html" class="mob-link">Jobs</a>
+  <a href="insights.html" class="mob-link">Insights</a>
+  <a href="mailto:info@astrustalent.com" class="btn-nav" style="width:fit-content;margin-top:8px">Get in Touch</a>
+</div>
+
+<div id="root"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="wordmark">ASTRUS<span class="dot">.</span></a>
+        <p>Global Data Center recruitment specialists.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="expertise.html">Expertise</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="candidates.html">Candidates</a></li>
+          <li><a href="jobs.html">Jobs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sectors</h4>
+        <ul>
+          <li><a href="index.html#expertise">Data Center Construction</a></li>
+          <li><a href="index.html#expertise">Critical Facilities</a></li>
+          <li><a href="index.html#expertise">IT Infrastructure and Cloud</a></li>
+          <li><a href="index.html#expertise">Executive Search</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="contact-item"><a href="mailto:info@astrustalent.com">info@astrustalent.com</a></div>
+          <div class="contact-item">Dubai: <a href="tel:+971585536439">+971 58 553 6439</a></div>
+          <div class="contact-item">London: <a href="tel:+447581155141">+44 7581 155141</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-quote">
+      <p>"Astrus comes from the Lithuanian word 'aštrus', meaning sharp. A reflection of our focus on insight, precision, and hiring that delivers real impact."</p>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Astrus Talent. All rights reserved.</span>
+      <span>A trading name of Weareastrus FZC LLC.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://ziciunvqtrcuzcudtfcl.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_iHYbQNjd71dqo-Ls-YVirw_EgRKpKpT'
+const { createClient } = window.supabase
+const db = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+const CONTRACT_LABELS = { permanent:'Permanent', contract:'Contract', interim:'Interim', temp:'Temporary' }
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+function fmtMoney(n) { return n != null ? '£' + Number(n).toLocaleString() : null }
+
+const params = new URLSearchParams(window.location.search)
+const jobId = params.get('job')
+
+async function init() {
+  if (jobId) {
+    await renderJobDetail(jobId)
+  } else {
+    await renderJobList()
+  }
+}
+
+// ── LIST VIEW ──────────────────────────────────────────
+async function renderJobList() {
+  document.getElementById('root').innerHTML = `
+    <section>
+      <div class="container">
+        <div class="page-header">
+          <p class="page-eyebrow">Open Positions</p>
+          <h1>Current Opportunities</h1>
+          <p>Specialist roles across data center construction, operations, IT infrastructure, and executive leadership. UK, UAE and global.</p>
+        </div>
+        <div class="jobs-grid" id="jobs-grid">
+          <div class="state-box"><div class="spinner"></div><p>Loading roles…</p></div>
+        </div>
+      </div>
+    </section>`
+
+  const { data: jobs, error } = await db
+    .from('jobs')
+    .select('id, title, location, contract_type, salary_min, salary_max, advert_text, clients(company_name, hq_city)')
+    .eq('published', true)
+    .order('created_at', { ascending: false })
+
+  const grid = document.getElementById('jobs-grid')
+  if (!grid) return
+
+  if (error || !jobs?.length) {
+    grid.innerHTML = `
+      <div class="state-box">
+        <p style="font-size:18px;font-weight:600;margin-bottom:8px">No open roles at the moment</p>
+        <p>We work on many roles that aren't advertised. <a href="mailto:info@astrustalent.com" style="color:var(--blue)">Get in touch</a> to discuss your search.</p>
+      </div>`
+    return
+  }
+
+  grid.innerHTML = jobs.map(job => {
+    const company = job.clients?.company_name
+    const location = job.location || job.clients?.hq_city
+    const sMin = fmtMoney(job.salary_min)
+    const sMax = fmtMoney(job.salary_max)
+    const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
+    const contract = CONTRACT_LABELS[job.contract_type] || null
+
+    const tags = [
+      company  ? `<span class="meta-tag">${esc(company)}</span>` : '',
+      location ? `<span class="meta-tag">${esc(location)}</span>` : '',
+      contract ? `<span class="meta-tag">${esc(contract)}</span>` : '',
+      salary   ? `<span class="meta-tag salary">${esc(salary)}</span>` : '',
+    ].filter(Boolean).join('')
+
+    return `
+      <div class="job-card" onclick="window.location.href='jobs.html?job=${job.id}'">
+        <div class="job-card-body">
+          <div class="job-card-title">${esc(job.title)}</div>
+          ${company ? `<div style="font-size:14px;color:var(--muted);margin-top:2px">${esc(company)}</div>` : ''}
+          ${tags ? `<div class="job-card-meta">${tags}</div>` : ''}
+        </div>
+        <div class="job-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>`
+  }).join('')
+}
+
+// ── DETAIL VIEW ────────────────────────────────────────
+async function renderJobDetail(id) {
+  document.getElementById('root').innerHTML = `
+    <div class="job-detail container">
+      <div class="state-box"><div class="spinner"></div></div>
+    </div>`
+
+  const { data: job, error } = await db
+    .from('jobs')
+    .select('*, clients(company_name, hq_city, industry)')
+    .eq('id', id)
+    .eq('published', true)
+    .single()
+
+  if (error || !job) {
+    document.getElementById('root').innerHTML = `
+      <div class="job-detail container">
+        <a href="jobs.html" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          All Jobs
+        </a>
+        <div class="state-box">
+          <p style="font-size:18px;font-weight:600;margin-bottom:8px">Role not found</p>
+          <p>This role may have been filled. <a href="jobs.html" style="color:var(--blue)">View all open roles</a>.</p>
+        </div>
+      </div>`
+    return
+  }
+
+  document.title = `${job.title} | Astrus Talent`
+
+  const company = job.clients?.company_name
+  const location = job.location || job.clients?.hq_city
+  const sMin = fmtMoney(job.salary_min)
+  const sMax = fmtMoney(job.salary_max)
+  const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
+  const contract = CONTRACT_LABELS[job.contract_type] || null
+
+  const tags = [
+    company  ? `<span class="meta-tag">${esc(company)}</span>` : '',
+    location ? `<span class="meta-tag">${esc(location)}</span>` : '',
+    contract ? `<span class="meta-tag">${esc(contract)}</span>` : '',
+    salary   ? `<span class="meta-tag salary">${esc(salary)}</span>` : '',
+  ].filter(Boolean).join('')
+
+  const advertBody = job.advert_text || job.description || ''
+  const requirements = (!job.advert_text && job.requirements) ? job.requirements : ''
+
+  document.getElementById('root').innerHTML = `
+    <div class="job-detail container">
+      <a href="jobs.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All Jobs
+      </a>
+
+      <div class="job-detail-header">
+        <div class="job-detail-title">${esc(job.title)}</div>
+        ${company ? `<div class="job-detail-company">${esc(company)}</div>` : ''}
+        ${tags ? `<div class="job-card-meta">${tags}</div>` : ''}
+        <div class="apply-btn-wrap">
+          <button class="btn-apply" id="apply-btn" onclick="showApplyForm()">
+            Apply for this Role
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      ${advertBody ? `
+      <div class="section-card">
+        <div class="section-label">About the Role</div>
+        <div class="section-content">${esc(advertBody)}</div>
+      </div>` : ''}
+
+      ${requirements ? `
+      <div class="section-card">
+        <div class="section-label">Requirements</div>
+        <div class="section-content">${esc(requirements)}</div>
+      </div>` : ''}
+
+      <div class="apply-form-section" id="apply-form-section">
+        <div class="apply-form-title">Apply for this Role</div>
+        <div class="apply-form-sub">Fill in your details below and we'll be in touch shortly.</div>
+
+        <div id="form-error" class="alert-error"></div>
+
+        <form onsubmit="submitApplication(event, '${esc(id)}', '${esc(job.title)}')">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name <span class="req">*</span></label>
+              <input id="a_first_name" class="form-input" placeholder="James" autocomplete="given-name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span class="req">*</span></label>
+              <input id="a_last_name" class="form-input" placeholder="Gilbert" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email <span class="req">*</span></label>
+              <input id="a_email" type="email" class="form-input" placeholder="you@email.com" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input id="a_phone" class="form-input" placeholder="+44 7700 000000" autocomplete="tel">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn Profile</label>
+            <input id="a_linkedin_url" class="form-input" placeholder="https://linkedin.com/in/your-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CV Link</label>
+            <input id="a_cv_url" class="form-input" placeholder="Google Drive, Dropbox, or OneDrive link">
+            <div class="form-hint">Share a link to your CV — Google Drive, Dropbox, OneDrive, etc.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cover Note <span class="req">*</span></label>
+            <textarea id="a_cover_note" class="form-input" placeholder="Tell us why you're a great fit for this role…" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit-form" id="submit-btn">Submit Application</button>
+          <div class="privacy-note">Your details will be handled securely by Astrus Talent and used only in connection with this application.</div>
+        </form>
+      </div>
+
+    </div>`
+}
+
+function showApplyForm() {
+  const form = document.getElementById('apply-form-section')
+  const btn = document.getElementById('apply-btn')
+  form.classList.add('visible')
+  btn.style.display = 'none'
+  setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100)
+  document.getElementById('a_first_name')?.focus()
+}
+
+async function submitApplication(e, jobId, jobTitle) {
+  e.preventDefault()
+  const btn = document.getElementById('submit-btn')
+  const errEl = document.getElementById('form-error')
+  btn.disabled = true
+  btn.textContent = 'Submitting…'
+  errEl.style.display = 'none'
+
+  const firstName = document.getElementById('a_first_name').value.trim()
+  const lastName = document.getElementById('a_last_name').value.trim()
+  const email = document.getElementById('a_email').value.trim()
+
+  const payload = {
+    job_id: jobId,
+    first_name: firstName,
+    last_name: lastName || null,
+    email,
+    phone: document.getElementById('a_phone').value.trim() || null,
+    linkedin_url: document.getElementById('a_linkedin_url').value.trim() || null,
+    cv_url: document.getElementById('a_cv_url').value.trim() || null,
+    cover_note: document.getElementById('a_cover_note').value.trim(),
+  }
+
+  const { error } = await db.from('job_applications').insert(payload)
+
+  if (error) {
+    btn.disabled = false
+    btn.textContent = 'Submit Application'
+    errEl.textContent = 'Something went wrong — please try again or email us at info@astrustalent.com'
+    errEl.style.display = 'block'
+    return
+  }
+
+  // Email notification to James
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer RESEND_API_KEY_PLACEHOLDER',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'applications@astrustalent.com',
+        to: 'james@astrustalent.com',
+        subject: `New Application — ${jobTitle}`,
+        html: `
+          <h2>New job application received</h2>
+          <p><strong>Role:</strong> ${jobTitle}</p>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          ${payload.phone ? `<p><strong>Phone:</strong> ${payload.phone}</p>` : ''}
+          ${payload.linkedin_url ? `<p><strong>LinkedIn:</strong> <a href="${payload.linkedin_url}">${payload.linkedin_url}</a></p>` : ''}
+          ${payload.cv_url ? `<p><strong>CV:</strong> <a href="${payload.cv_url}">View CV</a></p>` : ''}
+          ${payload.cover_note ? `<p><strong>Cover Note:</strong><br>${payload.cover_note.replace(/\n/g,'<br>')}</p>` : ''}
+          <hr>
+          <p><a href="https://astrustalentcrm.netlify.app">View in CRM</a></p>
+        `
+      })
+    })
+  } catch(_) {}
+
+  document.getElementById('apply-form-section').outerHTML = `
+    <div class="success-box">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-title">Application submitted</div>
+      <div class="success-sub">Thanks for applying, ${esc(firstName)}. A member of the Astrus Talent team will review your application and be in touch.</div>
+    </div>`
+}
+
+// ── NAV ───────────────────────────────────────────────
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('open')
+})
+
+init()
+</script>
+</body>
+</html>

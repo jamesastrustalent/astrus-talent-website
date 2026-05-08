@@ -1,0 +1,6 @@
+# Force www to non-www (or vice versa — pick one and stick to it)
+# Uncomment the line below if you want www.astrustalent.com to redirect to astrustalent.com
+# https://www.astrustalent.com/* https://astrustalent.com/:splat 301!
+
+# 404 fallback
+/*  /index.html  200
