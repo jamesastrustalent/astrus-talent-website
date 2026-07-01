@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Expertise | Astrus Talent</title>
+  <meta name="description" content="Specialist Data Center recruitment across five core verticals: construction and design, critical facilities, IT infrastructure and cloud, executive search, and commercial and sustainability.">
+  <link rel="canonical" href="https://astrustalent.com/expertise">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .verticals { padding: 30px 0 96px; }
+    .vrow { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 80px; }
+    .vrow:last-child { margin-bottom: 0; }
+    .vimg { width: 100%; aspect-ratio: 16 / 11; object-fit: cover; border-radius: 16px; display: block; border: 1px solid var(--card-border); }
+    .vcaption { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .vcaption .ic { width: 34px; height: 34px; border-radius: 9px; background: var(--blue-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .vcaption .ic svg { width: 18px; height: 18px; stroke: var(--blue); }
+    .vcaption span { font-size: 14px; font-weight: 600; color: var(--blue); }
+    .vtext h2 { font-size: clamp(24px, 2.8vw, 32px); color: #fff; margin-bottom: 16px; }
+    .vtext p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 22px; }
+    .vpills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .vpills span { font-size: 14px; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-border); border-radius: 22px; padding: 7px 15px; }
+    @media (max-width: 820px) {
+      .vrow { grid-template-columns: 1fr; gap: 24px; margin-bottom: 56px; }
+      .vrow .vimg { order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
+        <ul class="nav-links nav-links-desktop">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="expertise.html" class="active">Expertise</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="candidates.html">Candidates</a></li>
+          <li><a href="jobs.html">Jobs</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <a href="contact.html" class="btn-nav">Get in Touch</a>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="expertise.html">Expertise</a>
+    <a href="clients.html">Clients</a>
+    <a href="candidates.html">Candidates</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="insights.html">Insights</a>
+    <a href="assessment.html">Assessment</a>
+    <a href="contact.html" class="btn-nav" style="width:fit-content;margin-top:8px;">Get in Touch</a>
+  </div>
+
+  <section class="page-header">
+    <div class="container">
+      <p class="page-eyebrow">Our Expertise</p>
+      <h1>From Construction to <span style="color:var(--blue)">Operations</span> to Leadership</h1>
+      <p>Deep specialisation across five core verticals of the Data Center ecosystem.</p>
+    </div>
+  </section>
+
+  <section class="verticals">
+    <div class="container">
+
+      <!-- 1 -->
+      <div class="vrow fade-up">
+        <img class="vimg" src="images/construction-site.jpg" alt="Data Center construction" loading="lazy">
+        <div class="vtext">
+          <div class="vcaption">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            <span>Supporting global Data Center builds from concept to delivery.</span>
+          </div>
+          <h2>Data Center Construction &amp; Design</h2>
+          <p>We place project managers, electrical and mechanical engineers, and commissioning specialists across new builds and expansions worldwide. From greenfield hyperscale to retrofit colocation, we find the talent that delivers on time and on spec.</p>
+          <div class="vpills">
+            <span>Project Managers</span><span>Electrical Engineers</span><span>Mechanical Engineers</span><span>Commissioning Engineers</span><span>Design Managers</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="vrow fade-up">
+        <div class="vtext">
+          <div class="vcaption">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+            <span>Ensuring uptime through specialist engineering talent.</span>
+          </div>
+          <h2>Critical Facilities &amp; Operations</h2>
+          <p>Data Center operations demand precision and reliability. We recruit critical facilities engineers, Data Center technicians, and facilities managers who understand the zero-downtime environment and can maintain the highest standards of operational excellence.</p>
+          <div class="vpills">
+            <span>Critical Facilities Engineers</span><span>Data Center Technicians</span><span>Facilities Managers</span><span>Operations Directors</span><span>Shift Leaders</span>
+          </div>
+        </div>
+        <img class="vimg" src="images/critical-facilities.jpg" alt="Critical facilities engineer in a Data Center" loading="lazy">
+      </div>
+
+      <!-- 3 -->
+      <div class="vrow fade-up">
+        <img class="vimg" src="images/fiber-optics.jpg" alt="Cloud and network infrastructure" loading="lazy">
+        <div class="vtext">
+          <div class="vcaption">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>
+            <span>Supporting cloud and AI infrastructure growth.</span>
+          </div>
+          <h2>IT Infrastructure &amp; Cloud</h2>
+          <p>As hyperscale and AI workloads accelerate, the need for specialist cloud and network engineers has never been greater. We recruit across cloud platforms including Google Cloud, Amazon Web Services, and Microsoft Azure.</p>
+          <div class="vpills">
+            <span>Cloud Engineers</span><span>Network Engineers</span><span>Systems Engineers</span><span>Solutions Architects</span><span>DevOps Engineers</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="vrow fade-up">
+        <div class="vtext">
+          <div class="vcaption">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+            <span>Hiring senior leaders driving expansion and operations.</span>
+          </div>
+          <h2>Leadership &amp; Executive Search</h2>
+          <p>From VP of Operations to Chief Technology Officer, we conduct confidential, targeted searches for the leaders who will shape the future of your organisation. Our executive search process combines deep industry knowledge with rigorous assessment.</p>
+          <div class="vpills">
+            <span>Directors</span><span>VP / SVP</span><span>C-Suite</span><span>Heads of Infrastructure</span><span>Board Advisors</span>
+          </div>
+        </div>
+        <img class="vimg" src="images/executive-meeting.jpg" alt="Executive leadership meeting" loading="lazy">
+      </div>
+
+      <!-- 5 -->
+      <div class="vrow fade-up">
+        <img class="vimg" src="images/sustainable-energy.jpg" alt="Sustainability and energy efficiency" loading="lazy">
+        <div class="vtext">
+          <div class="vcaption">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 0v10m0 0-4-4m4 4 4-4"/></svg></span>
+            <span>Supporting growth, sales, and energy efficiency in Data Centers.</span>
+          </div>
+          <h2>Commercial &amp; Sustainability</h2>
+          <p>We recruit commercial leaders and sustainability specialists who drive revenue growth while advancing environmental goals. From sales directors to energy efficiency consultants, including placements supporting Schneider Electric and similar partners.</p>
+          <div class="vpills">
+            <span>Sales Directors</span><span>Business Development</span><span>Sustainability Managers</span><span>Energy Consultants</span><span>Commercial Directors</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2 class="fade-up">Looking for Specialist Talent<br>or Your Next Role?</h2>
+      <p class="fade-up">Whichever side of the table you're on, we know the Data Center market better than anyone.</p>
+      <div class="cta-buttons fade-up">
+        <a href="contact.html" class="btn-primary">Hire Talent
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="jobs.html" class="btn-secondary">View Roles</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
+          <p>Global Data Center recruitment specialists.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="expertise.html">Expertise</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="candidates.html">Candidates</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="insights.html">Insights</a></li>
+            <li><a href="assessment.html">Assessment</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="contact-item"><a href="mailto:info@astrustalent.com">info@astrustalent.com</a></div>
+            <div class="contact-item">Dubai: <a href="tel:+971585536439">+971 58 553 6439</a></div>
+            <div class="contact-item">London: <a href="tel:+447581155141">+44 7581 155141</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-quote">
+        <p>"Astrus comes from the Lithuanian word 'aštrus', meaning sharp. A reflection of our focus on insight, precision, and hiring that delivers real impact."</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Astrus Talent. All rights reserved.</span>
+        <span>A trading name of Weareastrus FZC LLC.</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/971585536439" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z"/></svg>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>

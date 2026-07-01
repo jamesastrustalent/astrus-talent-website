@@ -14,15 +14,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
 
     :root {
-      --bg: #0d1117;
-      --card: #161b27;
-      --card2: #1c2235;
-      --card-border: rgba(255,255,255,.08);
-      --blue: #3b82f6;
-      --blue-dim: rgba(59,130,246,.12);
-      --blue-border: rgba(59,130,246,.3);
-      --text: #e2e8f0;
-      --muted: #8b9ab0;
+      --bg: #0e1115;
+      --card: rgba(23,26,33,0.8);
+      --card2: #21242c;
+      --card-border: #272c35;
+      --blue: #1a8cff;
+      --blue-dim: rgba(26,140,255,.1);
+      --blue-border: rgba(26,140,255,.3);
+      --text: #e7ebef;
+      --muted: #7b899d;
       --nav-h: 72px;
     }
 
@@ -52,13 +52,14 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       height: var(--nav-h); z-index: 100;
-      background: rgba(13,17,23,.92);
+      background: rgba(14,17,21,.92);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
     }
+    nav .container { height: 100% }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100% }
-    .wordmark { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; color: #fff }
-    .wordmark .dot { color: var(--blue) }
+    .wordmark { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; color: #fff; display: inline-flex; align-items: baseline }
+    .wordmark .dot { display: inline-block; width: 0.22em; height: 0.22em; border-radius: 50%; background: var(--blue); margin-left: 2px; position: relative; top: 0.02em }
     .nav-links { display: flex; align-items: center; gap: 32px; list-style: none }
     .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s }
     .nav-links a:hover, .nav-links a.active { color: #fff }
@@ -68,7 +69,7 @@
       padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer;
       transition: background .2s;
     }
-    .btn-nav:hover { background: #2563eb }
+    .btn-nav:hover { background: #1578e0 }
     .nav-toggle {
       display: none; flex-direction: column; gap: 5px;
       background: none; border: none; cursor: pointer; padding: 4px;
@@ -77,7 +78,7 @@
     .mobile-menu {
       display: none; flex-direction: column; gap: 4px;
       position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
-      background: #0d1117; border-bottom: 1px solid var(--card-border);
+      background: var(--bg); border-bottom: 1px solid var(--card-border);
       padding: 20px 32px 28px;
     }
     .mobile-menu.open { display: flex }
@@ -132,7 +133,7 @@
     .state-box { text-align: center; padding: 80px 20px; color: var(--muted) }
     .spinner {
       width: 36px; height: 36px;
-      border: 3px solid rgba(59,130,246,.15); border-top-color: var(--blue);
+      border: 3px solid rgba(26,140,255,.15); border-top-color: var(--blue);
       border-radius: 50%; animation: spin .75s linear infinite; margin: 0 auto 16px;
     }
     @keyframes spin { to { transform: rotate(360deg) } }
@@ -174,9 +175,9 @@
       font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px;
       padding: 15px 32px; border-radius: 10px; border: none; cursor: pointer;
       transition: background .2s, transform .1s;
-      box-shadow: 0 4px 20px rgba(59,130,246,.35);
+      box-shadow: 0 4px 20px rgba(26,140,255,.35);
     }
-    .btn-apply:hover { background: #2563eb }
+    .btn-apply:hover { background: #1578e0 }
     .btn-apply:active { transform: scale(.99) }
 
     /* ── APPLICATION FORM ── */
@@ -208,7 +209,7 @@
       font-family: inherit; font-size: 15px; padding: 11px 14px;
       outline: none; transition: border-color .15s, box-shadow .15s;
     }
-    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59,130,246,.12) }
+    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,140,255,.12) }
     .form-input::placeholder { color: rgba(139,154,176,.5) }
     textarea.form-input { resize: none; min-height: 120px; line-height: 1.6 }
     .form-hint { font-size: 12px; color: var(--muted); margin-top: 5px; opacity: .7 }
@@ -218,9 +219,9 @@
       font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
       padding: 14px; border-radius: 9px; border: none; cursor: pointer;
       transition: background .2s; margin-top: 4px;
-      box-shadow: 0 4px 16px rgba(59,130,246,.3);
+      box-shadow: 0 4px 16px rgba(26,140,255,.3);
     }
-    .btn-submit-form:hover:not(:disabled) { background: #2563eb }
+    .btn-submit-form:hover:not(:disabled) { background: #1578e0 }
     .btn-submit-form:disabled { opacity: .55; cursor: not-allowed }
 
     .privacy-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; opacity: .7 }
@@ -291,7 +292,7 @@
 <nav>
   <div class="container">
     <div class="nav-inner">
-      <a href="index.html" class="wordmark">ASTRUS<span class="dot">.</span></a>
+      <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
       <ul class="nav-links nav-links-desktop">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -300,9 +301,10 @@
         <li><a href="candidates.html">Candidates</a></li>
         <li><a href="jobs.html" class="active">Jobs</a></li>
         <li><a href="insights.html">Insights</a></li>
+        <li><a href="assessment.html">Assessment</a></li>
       </ul>
       <div style="display:flex;align-items:center;gap:12px">
-        <a href="mailto:info@astrustalent.com" class="btn-nav">Get in Touch</a>
+        <a href="contact.html" class="btn-nav">Get in Touch</a>
         <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -319,7 +321,8 @@
   <a href="candidates.html" class="mob-link">Candidates</a>
   <a href="jobs.html" class="mob-link">Jobs</a>
   <a href="insights.html" class="mob-link">Insights</a>
-  <a href="mailto:info@astrustalent.com" class="btn-nav" style="width:fit-content;margin-top:8px">Get in Touch</a>
+  <a href="assessment.html" class="mob-link">Assessment</a>
+  <a href="contact.html" class="btn-nav" style="width:fit-content;margin-top:8px">Get in Touch</a>
 </div>
 
 <div id="root"></div>
@@ -328,7 +331,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="wordmark">ASTRUS<span class="dot">.</span></a>
+        <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
         <p>Global Data Center recruitment specialists.</p>
       </div>
       <div class="footer-col">
@@ -342,12 +345,11 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Sectors</h4>
+        <h4>Company</h4>
         <ul>
-          <li><a href="index.html#expertise">Data Center Construction</a></li>
-          <li><a href="index.html#expertise">Critical Facilities</a></li>
-          <li><a href="index.html#expertise">IT Infrastructure and Cloud</a></li>
-          <li><a href="index.html#expertise">Executive Search</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -633,7 +635,7 @@ async function submitApplication(e, jobId, jobTitle) {
       },
       body: JSON.stringify({
         from: 'applications@astrustalent.com',
-        to: 'james@astrustalent.com',
+        to: 'info@astrustalent.com',
         subject: `New Application — ${jobTitle}`,
         html: `
           <h2>New job application received</h2>

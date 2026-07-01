@@ -82,14 +82,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d1117;
-      --card: #161b27;
-      --card-border: rgba(255,255,255,0.08);
-      --blue: #3b82f6;
-      --blue-dim: rgba(59,130,246,0.12);
-      --blue-border: rgba(59,130,246,0.3);
-      --text: #e2e8f0;
-      --muted: #8b9ab0;
+      --bg: #0e1115;
+      --card: #171a21;
+      --card-border: #272c35;
+      --blue: #1a8cff;
+      --blue-dim: rgba(26,140,255,0.1);
+      --blue-border: rgba(26,140,255,0.3);
+      --text: #e7ebef;
+      --muted: #7b899d;
       --nav-h: 72px;
     }
 
@@ -125,11 +125,13 @@
       top: 0; left: 0; right: 0;
       height: var(--nav-h);
       z-index: 100;
-      background: rgba(13,17,23,0.9);
+      background: rgba(14,17,21,0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
     }
+
+    nav .container { height: 100%; }
 
     .nav-inner {
       display: flex;
@@ -144,9 +146,20 @@
       font-size: 22px;
       letter-spacing: -0.5px;
       color: #fff;
+      display: inline-flex;
+      align-items: baseline;
     }
 
-    .wordmark .dot { color: var(--blue); }
+    .wordmark .dot {
+      display: inline-block;
+      width: 0.22em;
+      height: 0.22em;
+      border-radius: 50%;
+      background: var(--blue);
+      margin-left: 2px;
+      position: relative;
+      top: 0.02em;
+    }
 
     .nav-links {
       display: flex;
@@ -219,13 +232,12 @@
       background-image: url('images/hero-datacenter.jpg');
       background-size: cover;
       background-position: center;
-      filter: brightness(0.35);
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(13,17,23,0.2) 0%, rgba(13,17,23,0.6) 100%);
+      background: linear-gradient(to right, #0e1115, rgba(14,17,21,0.85), rgba(14,17,21,0.6));
     }
 
     .hero-content {
@@ -246,7 +258,7 @@
 
     .hero-title {
       font-size: clamp(40px, 5.8vw, 76px);
-      color: #fff;
+      color: var(--text);
       margin-bottom: 24px;
       line-height: 1.1;
     }
@@ -329,7 +341,7 @@
 
     .section-title {
       font-size: clamp(28px, 3.5vw, 44px);
-      color: #fff;
+      color: var(--text);
       text-align: center;
       margin-bottom: 16px;
     }
@@ -349,10 +361,18 @@
       gap: 24px;
     }
 
+    .card-supporting {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+    }
+
     .expertise-card {
-      background: var(--card);
+      background: rgba(23,26,33,0.8);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
       transition: border-color 0.2s, transform 0.2s;
     }
@@ -392,24 +412,22 @@
 
     .card-icon svg { width: 22px; height: 22px; }
 
-    .card-icon.blue { background: rgba(59,130,246,0.15); }
-    .card-icon.blue svg { stroke: #3b82f6; }
+    /* All card icons use the single brand blue, matching the live site */
+    .card-icon.blue,
+    .card-icon.teal,
+    .card-icon.orange,
+    .card-icon.purple,
+    .card-icon.green { background: var(--blue-dim); }
 
-    .card-icon.teal { background: rgba(20,184,166,0.15); }
-    .card-icon.teal svg { stroke: #14b8a6; }
-
-    .card-icon.orange { background: rgba(249,115,22,0.15); }
-    .card-icon.orange svg { stroke: #f97316; }
-
-    .card-icon.purple { background: rgba(139,92,246,0.15); }
-    .card-icon.purple svg { stroke: #8b5cf6; }
-
-    .card-icon.green { background: rgba(34,197,94,0.15); }
-    .card-icon.green svg { stroke: #22c55e; }
+    .card-icon.blue svg,
+    .card-icon.teal svg,
+    .card-icon.orange svg,
+    .card-icon.purple svg,
+    .card-icon.green svg { stroke: var(--blue); }
 
     .card-title {
       font-size: 19px;
-      color: #fff;
+      color: var(--text);
       font-weight: 700;
     }
 
@@ -440,9 +458,7 @@
     /* ── GLOBAL REACH ── */
     #global {
       padding: 96px 0;
-      background: var(--card);
-      border-top: 1px solid var(--card-border);
-      border-bottom: 1px solid var(--card-border);
+      background: var(--bg);
     }
 
     .global-inner {
@@ -472,7 +488,7 @@
     .global-content .section-eyebrow { text-align: left; }
     .global-content .section-title { text-align: left; }
 
-    .global-content p {
+    .global-content p:not(.section-eyebrow) {
       font-size: 16px;
       color: var(--muted);
       line-height: 1.8;
@@ -480,16 +496,77 @@
     }
 
 
+    /* ── WHAT WE DO ── */
+    #what-we-do {
+      padding: 96px 0;
+      text-align: center;
+      background: linear-gradient(to bottom, #0e1115, rgba(33,36,44,0.3), #0e1115);
+    }
+
+    .what-we-do-lead {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 760px;
+      margin: 8px auto 0;
+    }
+
+    /* ── TALK TO AN EXPERT ── */
+    #talk-expert {
+      padding: 96px 0;
+      text-align: center;
+      background: linear-gradient(to right bottom, rgba(26,140,255,0.1), #0e1115, #0e1115);
+    }
+
+    .talk-expert-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .talk-expert-icon svg { width: 30px; height: 30px; }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-whatsapp:hover {
+      background: #1da851;
+      transform: translateY(-1px);
+    }
+
     /* ── CTA BAND ── */
     #cta-band {
       padding: 100px 0;
       text-align: center;
-      background: linear-gradient(135deg, #0d1117 0%, #131928 100%);
+      background: var(--bg);
+    }
+
+    #cta-band .container {
+      background: linear-gradient(to right bottom, rgba(26,140,255,0.1), #171a21, #171a21);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 64px;
     }
 
     .cta-band-title {
       font-size: clamp(28px, 4vw, 50px);
-      color: #fff;
+      color: var(--text);
       margin-bottom: 18px;
     }
 
@@ -512,7 +589,7 @@
 
     /* ── FOOTER ── */
     footer {
-      background: #0a0d13;
+      background: var(--bg);
       border-top: 1px solid var(--card-border);
       padding: 64px 0 0;
     }
@@ -537,11 +614,11 @@
 
     .footer-col h4 {
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--text);
       margin-bottom: 20px;
     }
 
@@ -660,7 +737,7 @@
   <nav>
     <div class="container">
       <div class="nav-inner">
-        <a href="#" class="wordmark">ASTRUS<span class="dot">.</span></a>
+        <a href="#" class="wordmark">ASTRUS<span class="dot"></span></a>
         <ul class="nav-links nav-links-desktop">
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about.html">About</a></li>
@@ -669,9 +746,10 @@
           <li><a href="candidates.html">Candidates</a></li>
           <li><a href="jobs.html">Jobs</a></li>
           <li><a href="insights.html">Insights</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
         </ul>
         <div style="display:flex;align-items:center;gap:12px;">
-          <a href="mailto:info@astrustalent.com" class="btn-nav">Get in Touch</a>
+          <a href="contact.html" class="btn-nav">Get in Touch</a>
           <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
@@ -689,7 +767,8 @@
     <a href="candidates.html" class="mob-link">Candidates</a>
     <a href="jobs.html" class="mob-link">Jobs</a>
     <a href="insights.html" class="mob-link">Insights</a>
-    <a href="mailto:info@astrustalent.com" class="btn-nav" style="width:fit-content;margin-top:8px;">Get in Touch</a>
+    <a href="assessment.html" class="mob-link">Assessment</a>
+    <a href="contact.html" class="btn-nav" style="width:fit-content;margin-top:8px;">Get in Touch</a>
   </div>
 
   <!-- HERO -->
@@ -703,15 +782,26 @@
         Behind the World's <span class="accent">Digital<br>Infrastructure</span>
       </h1>
       <p class="hero-sub">
-        Specialist recruitment across Data Centers, hyperscale, and mission critical environments. From construction to operations to leadership.
+        Specialist recruitment across Data Centers, hyperscale, and mission-critical environments. From construction to operations to leadership.
       </p>
       <div class="hero-ctas">
-        <a href="mailto:info@astrustalent.com" class="btn-hero-primary">
+        <a href="contact.html" class="btn-hero-primary">
           Hire Talent
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://linkedin.com/company/astrus-talent" target="_blank" rel="noopener" class="btn-hero-secondary">Find a Role</a>
+        <a href="jobs.html" class="btn-hero-secondary">Find a Role</a>
       </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section id="what-we-do">
+    <div class="container">
+      <p class="section-eyebrow fade-up">What We Do</p>
+      <h2 class="section-title fade-up">Mission-Critical Talent</h2>
+      <p class="what-we-do-lead fade-up">
+        We specialise in placing talent across the full Data Center lifecycle, from construction and design through to operations and executive leadership. Our niche focus means we understand the technical demands, the urgency of uptime, and the calibre of people required to keep the world's digital infrastructure running.
+      </p>
     </div>
   </section>
 
@@ -719,10 +809,61 @@
   <section id="expertise">
     <div class="container">
       <p class="section-eyebrow fade-up">Our Expertise</p>
-      <h2 class="section-title fade-up">Specialist Recruitment Across<br>Every Area of the Data Center</h2>
-      <p class="section-sub fade-up">We cover every discipline within the data center and mission critical sector, from the people who build it to the leaders who run it.</p>
+      <h2 class="section-title fade-up" style="margin-bottom:56px;">Core Focus Areas</h2>
 
       <div class="expertise-grid">
+
+        <div class="expertise-card fade-up">
+          <img class="card-image" src="images/construction-site.jpg" alt="Data Center Construction & Design" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <span class="card-title">Data Center Construction &amp; Design</span>
+            </div>
+            <ul class="card-list">
+              <li>Project Managers</li>
+              <li>Electrical &amp; Mechanical Engineers</li>
+              <li>Commissioning Engineers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="expertise-card fade-up">
+          <img class="card-image" src="images/critical-facilities.jpg" alt="Critical Facilities & Operations" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              </div>
+              <span class="card-title">Critical Facilities &amp; Operations</span>
+            </div>
+            <ul class="card-list">
+              <li>Critical Facilities Engineers</li>
+              <li>Data Center Technicians</li>
+              <li>Facilities Managers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="expertise-card fade-up">
+          <img class="card-image" src="images/fiber-optics.jpg" alt="IT Infrastructure & Cloud" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              </div>
+              <span class="card-title">IT Infrastructure &amp; Cloud</span>
+            </div>
+            <ul class="card-list">
+              <li>Cloud Engineers</li>
+              <li>Network Engineers</li>
+              <li>Systems Engineers</li>
+            </ul>
+            <p class="card-supporting">Supporting: Amazon Web Services · Microsoft Azure</p>
+          </div>
+        </div>
 
         <div class="expertise-card fade-up">
           <img class="card-image" src="images/executive-meeting.jpg" alt="Executive Search" loading="lazy">
@@ -735,93 +876,25 @@
             </div>
             <ul class="card-list">
               <li>Directors</li>
-              <li>VP and C Level</li>
+              <li>VP / C-Level</li>
               <li>Heads of Infrastructure</li>
             </ul>
           </div>
         </div>
 
         <div class="expertise-card fade-up">
-          <img class="card-image" src="images/sustainable-energy.jpg" alt="Commercial and Sustainability" loading="lazy">
+          <img class="card-image" src="images/sustainable-energy.jpg" alt="Commercial & Sustainability" loading="lazy">
           <div class="card-body">
             <div class="card-header">
               <div class="card-icon teal">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 0v10m0 0-4-4m4 4 4-4"/></svg>
               </div>
-              <span class="card-title">Commercial and Sustainability</span>
+              <span class="card-title">Commercial &amp; Sustainability</span>
             </div>
             <ul class="card-list">
               <li>Sales Leaders</li>
               <li>Energy Efficiency Specialists</li>
               <li>Business Development</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/construction-site.jpg" alt="Data Center Construction" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon orange">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-              </div>
-              <span class="card-title">Data Center Construction</span>
-            </div>
-            <ul class="card-list">
-              <li>MEP Project Managers</li>
-              <li>Site and Construction Managers</li>
-              <li>Commissioning Engineers</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/critical-facilities.jpg" alt="Critical Facilities" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon purple">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-              </div>
-              <span class="card-title">Critical Facilities</span>
-            </div>
-            <ul class="card-list">
-              <li>Data Center Managers</li>
-              <li>Facilities and Operations Engineers</li>
-              <li>Critical Environment Technicians</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/fiber-optics.jpg" alt="IT Infrastructure and Cloud" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-              </div>
-              <span class="card-title">IT Infrastructure and Cloud</span>
-            </div>
-            <ul class="card-list">
-              <li>Cloud Architects</li>
-              <li>Network Engineers</li>
-              <li>Systems Administrators</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/sustainable-energy.jpg" alt="Power and Utilities" loading="lazy" style="object-position: left;">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon blue">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </div>
-              <span class="card-title">Power and Utilities</span>
-            </div>
-            <ul class="card-list">
-              <li>High Voltage Engineers</li>
-              <li>Power Systems Specialists</li>
-              <li>Utility Infrastructure Managers</li>
             </ul>
           </div>
         </div>
@@ -834,16 +907,35 @@
   <section id="global">
     <div class="container">
       <div class="global-inner">
+        <div class="global-content fade-up">
+          <p class="section-eyebrow" style="text-align:left;">Global Reach</p>
+          <h2 class="section-title" style="text-align:left;">Delivering Talent Globally.</h2>
+          <p>We support hyperscale providers, colocation operators, and construction firms across the globe. Our worldwide network ensures access to the best mission-critical talent wherever they are.</p>
+        </div>
         <div class="globe-wrap fade-up">
           <div class="globe-mask">
             <canvas id="globeCanvas" width="460" height="460"></canvas>
           </div>
         </div>
-        <div class="global-content fade-up">
-          <p class="section-eyebrow" style="text-align:left;">Global Reach</p>
-          <h2 class="section-title" style="text-align:left;">A Truly Global<br>Talent Network</h2>
-          <p>Our reach spans the UK, Europe, Middle East, and Africa. Whether you are building a hyperscale campus in the UAE or scaling operations across continental Europe, we have the network to find the right people.</p>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALK TO AN EXPERT -->
+  <section id="talk-expert">
+    <div class="container">
+      <div class="talk-expert-icon fade-up">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h2 class="section-title fade-up">Talk to an Expert</h2>
+      <p class="section-sub fade-up" style="margin-bottom:36px;">
+        Have a hiring need or looking for your next role in Data Centers? Chat directly with our team on WhatsApp for a fast, confidential conversation.
+      </p>
+      <div style="text-align:center;">
+        <a href="https://wa.me/971585536439" target="_blank" rel="noopener" class="btn-whatsapp fade-up">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z"/></svg>
+          Chat on WhatsApp
+        </a>
       </div>
     </div>
   </section>
@@ -851,14 +943,14 @@
   <!-- CTA BAND -->
   <section id="cta-band">
     <div class="container">
-      <h2 class="cta-band-title fade-up">Partner with a Specialist in<br><span style="color:var(--blue)">Mission Critical Recruitment</span></h2>
-      <p class="cta-band-sub fade-up">Tell us what you need. We will find the people others cannot.</p>
+      <h2 class="cta-band-title fade-up">Partner with a Specialist in <span style="color:var(--blue)">Mission-Critical Recruitment</span></h2>
+      <p class="cta-band-sub fade-up">Whether you're scaling operations, building new facilities, or hiring leadership, we deliver the talent that keeps the world connected.</p>
       <div class="cta-band-buttons fade-up">
-        <a href="mailto:info@astrustalent.com" class="btn-hero-primary">
-          Get in Touch
+        <a href="contact.html" class="btn-hero-primary">
+          Request Talent
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://linkedin.com/company/astrus-talent" target="_blank" rel="noopener" class="btn-hero-secondary">View LinkedIn</a>
+        <a href="candidates.html" class="btn-hero-secondary">Submit CV</a>
       </div>
     </div>
   </section>
@@ -869,7 +961,7 @@
       <div class="footer-grid">
 
         <div class="footer-brand">
-          <a href="#" class="wordmark">ASTRUS<span class="dot">.</span></a>
+          <a href="#" class="wordmark">ASTRUS<span class="dot"></span></a>
           <p>Global Data Center recruitment specialists.</p>
         </div>
 
@@ -881,16 +973,17 @@
             <li><a href="clients.html">Clients</a></li>
             <li><a href="candidates.html">Candidates</a></li>
             <li><a href="jobs.html">Jobs</a></li>
+            <li><a href="assessment.html">Astrus Assessment</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Sectors</h4>
           <ul>
-            <li><a href="#expertise">Data Center Construction</a></li>
-            <li><a href="#expertise">Critical Facilities</a></li>
-            <li><a href="#expertise">IT Infrastructure and Cloud</a></li>
-            <li><a href="#expertise">Executive Search</a></li>
+            <li><a href="expertise.html">Data Center Construction</a></li>
+            <li><a href="expertise.html">Critical Facilities</a></li>
+            <li><a href="expertise.html">IT Infrastructure &amp; Cloud</a></li>
+            <li><a href="expertise.html">Executive Search</a></li>
           </ul>
         </div>
 
@@ -915,6 +1008,11 @@
       </div>
     </div>
   </footer>
+
+  <a href="https://wa.me/971585536439" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+     style="position:fixed;right:24px;bottom:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,0.4);">
+    <svg viewBox="0 0 24 24" style="width:30px;height:30px;fill:#fff;"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z"/></svg>
+  </a>
 
   <script>
     // Mobile nav

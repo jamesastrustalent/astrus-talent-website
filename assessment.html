@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astrus Assessment | Behavioural &amp; Competency Assessment</title>
+  <meta name="description" content="Astrus Assessment is an AI powered behavioural and competency assessment platform. Five role specific assessments, twelve competencies, a seven-page report in minutes.">
+  <link rel="canonical" href="https://astrustalent.com/assessment">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Teal accent — Assessment brand only */
+    .a-page { --accent: var(--teal); --accent-dim: var(--teal-dim); --accent-border: var(--teal-border); }
+    .a-page .page-eyebrow, .a-page .section-eyebrow { color: var(--teal); }
+    /* Assessment lock-up logo: ASTRUS . | Assessment */
+    .wm-lockup { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; color: #fff; display: inline-flex; align-items: center; }
+    .wm-lockup .dot { display: inline-block; width: 0.22em; height: 0.22em; border-radius: 50%; background: var(--blue); margin-left: 2px; position: relative; top: 0.28em; }
+    .wm-lockup .bar { display: inline-block; width: 1.5px; height: 20px; background: rgba(255,255,255,0.28); margin: 0 14px; }
+    .wm-lockup .word { font-weight: 500; color: #cdd6e4; }
+    .a-page .btn-teal {
+      background: var(--teal); color: #fff; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
+      padding: 14px 30px; border-radius: 8px; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s;
+    }
+    .a-page .btn-teal:hover { background: #00b3bd; transform: translateY(-1px); }
+    .a-page .btn-teal svg { width: 16px; height: 16px; }
+
+    .a-hero { padding: calc(var(--nav-h) + 90px) 0 30px; text-align: center; }
+    .a-hero .kicker { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; }
+    .a-hero h1 { font-size: clamp(44px, 7vw, 84px); color: #fff; line-height: 1.05; margin-bottom: 6px; }
+    .a-hero h1 .sub { display: block; color: var(--teal); }
+    .a-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-dim); border: 1px solid var(--teal-border); border-radius: 22px; padding: 7px 18px; margin: 20px 0 18px; }
+    .a-hero .line { font-size: 16px; color: var(--muted); margin-bottom: 34px; }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 30px auto 0; }
+    .stat { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 28px 20px; text-align: center; }
+    .stat .num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 44px; color: var(--teal); line-height: 1; }
+    .stat .lbl { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+
+    .a-section { padding: 80px 0; }
+    .a-intro { max-width: 780px; margin: 0 auto; text-align: center; }
+    .a-intro h2 { font-size: clamp(26px, 3.4vw, 40px); color: #fff; margin-bottom: 20px; }
+    .a-intro p { font-size: 17px; color: var(--muted); line-height: 1.8; }
+
+    .a-card .feature-icon { background: var(--teal-dim); }
+    .a-card .feature-icon svg { stroke: var(--teal); }
+    .a-card:hover { border-color: var(--teal-border); }
+
+    .role-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 30px 28px; transition: border-color 0.2s, transform 0.2s; }
+    .role-card:hover { border-color: var(--teal-border); transform: translateY(-3px); }
+    .role-card .role-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 22px; color: var(--teal); margin-bottom: 12px; }
+    .role-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .roles-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    @media (max-width: 960px) { .roles-grid { grid-template-columns: 1fr 1fr; } .stats { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .roles-grid { grid-template-columns: 1fr; } }
+
+    .a-step .step-num { background: var(--teal-dim); color: var(--teal); }
+    .a-form .form-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,152,161,0.14); }
+    .a-form .req { color: var(--teal); }
+    .a-form .btn-submit { background: var(--teal); box-shadow: 0 4px 16px rgba(0,152,161,0.3); }
+    .a-form .btn-submit:hover { background: #00b3bd; }
+    .a-form .form-card { max-width: 720px; margin: 0 auto; }
+  </style>
+</head>
+<body class="a-page">
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="wm-lockup">ASTRUS<span class="dot"></span><span class="bar"></span><span class="word">Assessment</span></a>
+        <ul class="nav-links nav-links-desktop">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="expertise.html">Expertise</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="candidates.html">Candidates</a></li>
+          <li><a href="jobs.html">Jobs</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="assessment.html" class="active">Assessment</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <a href="#demo" class="btn-teal" style="padding:10px 20px;font-size:14px;">Request a Demo</a>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="expertise.html">Expertise</a>
+    <a href="clients.html">Clients</a>
+    <a href="candidates.html">Candidates</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="insights.html">Insights</a>
+    <a href="assessment.html">Assessment</a>
+    <a href="#demo" class="btn-teal" style="width:fit-content;margin-top:8px;">Request a Demo</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="a-hero">
+    <div class="container">
+      <p class="kicker">Behavioural and Competency Assessment</p>
+      <h1>ASTRUS<span class="sub">Assessment</span></h1>
+      <div class="a-tag">New Hires · Existing Teams</div>
+      <p class="line">AI powered · Evidence based · Role specific · Report in minutes</p>
+      <a href="#demo" class="btn-teal">Request a Demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="stats">
+        <div class="stat fade-up"><div class="num">5</div><div class="lbl">Assessments</div></div>
+        <div class="stat fade-up"><div class="num">12</div><div class="lbl">Competencies</div></div>
+        <div class="stat fade-up"><div class="num">7</div><div class="lbl">Page Report</div></div>
+        <div class="stat fade-up"><div class="num">Min</div><div class="lbl">To Deliver</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS IT -->
+  <section class="a-section">
+    <div class="container">
+      <div class="a-intro fade-up">
+        <h2>What is Astrus Assessment?</h2>
+        <p>Astrus Assessment is a behavioural and competency assessment platform built for businesses that take hiring seriously. Use it as part of your standard recruitment process to evaluate new hires before they start, or run it as a standalone evaluation to understand the team you already have.</p>
+      </div>
+      <div class="card-grid cols-3" style="margin-top:56px;">
+        <div class="feature-card a-card fade-up">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11l-3-3m0 0l3-3m-3 3h6" transform="translate(-4,0)"/></svg></div>
+          <h3>New Hire Assessment</h3>
+          <p>Know exactly who you are bringing in before they start. Scored against twelve competencies specific to their role.</p>
+        </div>
+        <div class="feature-card a-card fade-up">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Team Evaluation</h3>
+          <p>Understand the strengths and development areas of your existing team. Identify gaps before they become problems.</p>
+        </div>
+        <div class="feature-card a-card fade-up">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+          <h3>Report in Minutes</h3>
+          <p>A full seven-page scored report delivered in minutes. Evidence based and built to inform decisions, not just validate them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE SPECIFIC -->
+  <section class="a-section" style="padding-top:0;">
+    <div class="container">
+      <h2 class="section-title fade-up">Five Role Specific Assessments</h2>
+      <p class="section-sub fade-up">Built for the roles where the right hire makes all the difference.</p>
+      <div class="roles-grid">
+        <div class="role-card fade-up"><div class="role-name">Sales</div><p>Commercial acumen, pipeline management, influence, and personal drive.</p></div>
+        <div class="role-card fade-up"><div class="role-name">Marketing</div><p>Brand strategy, commercial acumen, campaign execution, and creativity.</p></div>
+        <div class="role-card fade-up"><div class="role-name">Technology</div><p>Technical vision, systems architecture, delivery, and engineering standards.</p></div>
+        <div class="role-card fade-up"><div class="role-name">Operations</div><p>Strategic planning, process improvement, risk management, and change.</p></div>
+        <div class="role-card fade-up"><div class="role-name">Leadership</div><p>Organisational vision, people leadership, performance, and character.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="a-section" style="padding-top:0;">
+    <div class="container">
+      <h2 class="section-title fade-up" style="margin-bottom:48px;">How it Works</h2>
+      <div class="steps">
+        <div class="step a-step fade-up"><div class="step-num">1</div><h3>Choose Your Assessment</h3><p>Select the role specific assessment that matches the person being evaluated.</p></div>
+        <div class="step a-step fade-up"><div class="step-num">2</div><h3>Send the Link</h3><p>The candidate or team member completes the assessment in their own time. Takes around 1 hour.</p></div>
+        <div class="step a-step fade-up"><div class="step-num">3</div><h3>AI Analysis</h3><p>Our AI engine scores responses against twelve role specific competencies using evidence based methodology.</p></div>
+        <div class="step a-step fade-up"><div class="step-num">4</div><h3>Receive the Report</h3><p>A full seven-page scored report lands in your inbox in minutes. Ready to act on.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO FORM -->
+  <section class="a-section a-form" id="demo" style="padding-top:0;">
+    <div class="container">
+      <h2 class="section-title fade-up">Request a Demo</h2>
+      <p class="section-sub fade-up">Fill in your details and we will be in touch within 24 hours.</p>
+      <div class="form-card fade-up">
+        <form id="demo-form" onsubmit="return requestDemo(event)">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">First Name <span class="req">*</span></label><input id="d_first" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Last Name <span class="req">*</span></label><input id="d_last" class="form-input" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Company <span class="req">*</span></label><input id="d_company" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Email Address <span class="req">*</span></label><input id="d_email" type="email" class="form-input" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input id="d_phone" class="form-input" placeholder="+971 58 553 6439"></div>
+          <div class="form-group"><label class="form-label">Anything You Would Like Us to Know?</label><textarea id="d_message" class="form-input"></textarea></div>
+          <button type="submit" class="btn-submit">Request a Demo</button>
+          <div class="privacy-note">Your details will be handled securely by Astrus Talent and used only to arrange your demo.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
+          <p>Global Data Center recruitment specialists.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="expertise.html">Expertise</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="candidates.html">Candidates</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="insights.html">Insights</a></li>
+            <li><a href="assessment.html">Assessment</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="contact-item"><a href="mailto:info@astrustalent.com">info@astrustalent.com</a></div>
+            <div class="contact-item">Dubai: <a href="tel:+971585536439">+971 58 553 6439</a></div>
+            <div class="contact-item">London: <a href="tel:+447581155141">+44 7581 155141</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-quote">
+        <p>"Astrus comes from the Lithuanian word 'aštrus', meaning sharp. A reflection of our focus on insight, precision, and hiring that delivers real impact."</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Astrus Talent. All rights reserved.</span>
+        <span>A trading name of Weareastrus FZC LLC.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crm.js"></script>
+  <script>
+    function requestDemo(e) {
+      e.preventDefault();
+      var val = function (id) { return document.getElementById(id).value.trim(); };
+      return window.crmSubmit(e.target, 'contact_messages', function () {
+        return {
+          first_name: val('d_first'),
+          last_name: val('d_last') || null,
+          company_name: val('d_company'),
+          email: val('d_email'),
+          phone: val('d_phone') || null,
+          enquiry: val('d_message') || 'Assessment demo request',
+          type: 'assessment_demo',
+          status: 'new'
+        };
+      }, { title: 'Demo requested', body: 'Thank you. We\'ll be in touch within 24 hours to arrange your Astrus Assessment demo.' });
+    }
+  </script>
+</body>
+</html>

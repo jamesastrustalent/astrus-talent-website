@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insights | Astrus Talent</title>
+  <meta name="description" content="Market intelligence, trends, and perspectives from inside the Data Center talent market.">
+  <link rel="canonical" href="https://astrustalent.com/insights">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .updated { text-align: center; font-size: 13px; color: var(--muted); margin-top: -32px; margin-bottom: 8px; }
+    .insights-wrap { padding: 40px 0 96px; }
+    .insight-card {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 30px 32px; display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .insight-card:hover { border-color: var(--blue-border); transform: translateY(-3px); }
+    .insight-tag {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--blue);
+      background: var(--blue-dim); border: 1px solid var(--blue-border);
+      border-radius: 20px; padding: 5px 12px; margin-bottom: 16px;
+    }
+    .insight-card h3 { font-size: 20px; color: #fff; margin-bottom: 12px; line-height: 1.3; }
+    .insight-card p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+    .insight-source { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .insight-source span { color: var(--blue); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
+        <ul class="nav-links nav-links-desktop">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="expertise.html">Expertise</a></li>
+          <li><a href="clients.html">Clients</a></li>
+          <li><a href="candidates.html">Candidates</a></li>
+          <li><a href="jobs.html">Jobs</a></li>
+          <li><a href="insights.html" class="active">Insights</a></li>
+          <li><a href="assessment.html">Assessment</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <a href="contact.html" class="btn-nav">Get in Touch</a>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="expertise.html">Expertise</a>
+    <a href="clients.html">Clients</a>
+    <a href="candidates.html">Candidates</a>
+    <a href="jobs.html">Jobs</a>
+    <a href="insights.html">Insights</a>
+    <a href="assessment.html">Assessment</a>
+    <a href="contact.html" class="btn-nav" style="width:fit-content;margin-top:8px;">Get in Touch</a>
+  </div>
+
+  <section class="page-header">
+    <div class="container">
+      <p class="page-eyebrow">Insights</p>
+      <h1>Market <span style="color:var(--blue)">Intelligence</span></h1>
+      <p>Trends, analysis, and perspectives from inside the Data Center talent market.</p>
+    </div>
+  </section>
+  <p class="updated">Last updated 30 June 2026</p>
+
+  <!-- To add or edit an article, copy one <a class="insight-card"> block below and update the tag, title, text, source and href. -->
+  <section class="insights-wrap">
+    <div class="container">
+      <div class="card-grid cols-3">
+
+        <a class="insight-card fade-up" href="https://www.datacenterknowledge.com/" target="_blank" rel="noopener">
+          <span class="insight-tag">Emerging Trends</span>
+          <h3>Rack-Based Environmental Monitoring: Benefits, Insights, and Getting Started</h3>
+          <p>Rack-based environmental monitoring enhances data center efficiency by providing granular insights into temperature, humidity, and airflow.</p>
+          <div class="insight-source">Source: <span>Data Center Knowledge</span></div>
+        </a>
+
+        <a class="insight-card fade-up" href="https://www.datacenterdynamics.com/" target="_blank" rel="noopener">
+          <span class="insight-tag">Capex Watch</span>
+          <h3>Hyperscale Data completes land acquisition to expand Michigan campus</h3>
+          <p>Latest reporting from Data Center Dynamics. Read the full story for details.</p>
+          <div class="insight-source">Source: <span>Data Center Dynamics</span></div>
+        </a>
+
+        <a class="insight-card fade-up" href="https://www.datacenterdynamics.com/" target="_blank" rel="noopener">
+          <span class="insight-tag">Emerging Trends</span>
+          <h3>Google limits Meta's AI use due to capacity constraints - report</h3>
+          <p>Latest reporting from Data Center Dynamics. Read the full story for details.</p>
+          <div class="insight-source">Source: <span>Data Center Dynamics</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2 class="fade-up">Stay Ahead of the Market</h2>
+      <p class="fade-up">Talk to a specialist about what's happening in Data Center talent right now.</p>
+      <div class="cta-buttons fade-up">
+        <a href="contact.html" class="btn-primary">Get in Touch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://linkedin.com/company/astrus-talent" target="_blank" rel="noopener" class="btn-secondary">Follow on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="wordmark">ASTRUS<span class="dot"></span></a>
+          <p>Global Data Center recruitment specialists.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="expertise.html">Expertise</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="candidates.html">Candidates</a></li>
+            <li><a href="jobs.html">Jobs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="insights.html">Insights</a></li>
+            <li><a href="assessment.html">Assessment</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="contact-item"><a href="mailto:info@astrustalent.com">info@astrustalent.com</a></div>
+            <div class="contact-item">Dubai: <a href="tel:+971585536439">+971 58 553 6439</a></div>
+            <div class="contact-item">London: <a href="tel:+447581155141">+44 7581 155141</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-quote">
+        <p>"Astrus comes from the Lithuanian word 'aštrus', meaning sharp. A reflection of our focus on insight, precision, and hiring that delivers real impact."</p>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Astrus Talent. All rights reserved.</span>
+        <span>A trading name of Weareastrus FZC LLC.</span>
+      </div>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/971585536439" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.2-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z"/></svg>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>
