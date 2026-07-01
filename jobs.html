@@ -178,6 +178,9 @@
       box-shadow: 0 4px 20px rgba(26,140,255,.35);
     }
     .btn-apply:hover { background: #1578e0 }
+    .job-share { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap }
+    .btn-share { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.05); border: 1px solid var(--card-border); color: var(--text); font-family: inherit; font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 8px; cursor: pointer; text-decoration: none; transition: background .2s, border-color .2s }
+    .btn-share:hover { background: rgba(255,255,255,.1); border-color: var(--blue-border) }
     .btn-apply:active { transform: scale(.99) }
 
     /* ── APPLICATION FORM ── */
@@ -540,6 +543,16 @@ async function renderJobDetail(id) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
+        <div class="job-share">
+          <button type="button" class="btn-share" onclick="copyJobLink(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg>
+            Copy link
+          </button>
+          <a class="btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(location.origin + '/jobs.html?job=' + id)}" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4V8zM8 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24H8V8z"/></svg>
+            Share on LinkedIn
+          </a>
+        </div>
       </div>
 
       ${advertBody ? `
@@ -612,6 +625,13 @@ function showApplyForm() {
   btn.style.display = 'none'
   setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100)
   document.getElementById('a_first_name')?.focus()
+}
+
+function copyJobLink(btn) {
+  var url = location.origin + location.pathname + location.search;
+  var done = function () { var t = btn.querySelector('svg') ? 'Link copied' : 'Link copied'; btn.textContent = 'Link copied'; setTimeout(function () { location.reload && (btn.textContent = 'Copy link'); }, 1800); };
+  if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done).catch(function(){ prompt('Copy this link:', url); }); }
+  else { prompt('Copy this link:', url); }
 }
 
 async function submitApplication(e, jobId, jobTitle) {
