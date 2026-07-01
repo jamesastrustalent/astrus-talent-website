@@ -61,6 +61,8 @@
     transition:border-color .15s,box-shadow .15s;}
   .anl-input:focus{border-color:#1a8cff;box-shadow:0 0 0 3px rgba(26,140,255,.12);}
   .anl-input::placeholder{color:rgba(123,137,157,.6);}
+  .anl-phone{display:flex;gap:8px;}
+  .anl-phone .anl-code{flex:0 0 104px;} .anl-phone .anl-num{flex:1;min-width:0;}
   .anl-btn{width:100%;background:#1a8cff;color:#fff;font-family:inherit;font-weight:600;font-size:15px;
     padding:13px;border:none;border-radius:9px;cursor:pointer;margin-top:6px;display:flex;
     align-items:center;justify-content:center;gap:8px;transition:background .2s;}
@@ -86,7 +88,13 @@
           <div class="anl-field"><label class="anl-label">Last Name</label><input class="anl-input" name="last"></div>
         </div>
         <div class="anl-field"><label class="anl-label">Work Email *</label><input class="anl-input" type="email" name="email" required placeholder="you@company.com"></div>
-        <div class="anl-field"><label class="anl-label">Phone</label><input class="anl-input" name="phone" placeholder="+971 58 553 6439"></div>
+        <div class="anl-field"><label class="anl-label">Phone *</label>
+          <div class="anl-phone">
+            <input class="anl-input anl-code" list="anl-codes" value="+971" aria-label="Dialing code">
+            <input class="anl-input anl-num" name="phone" type="tel" inputmode="numeric" placeholder="58 553 6439" required>
+          </div>
+          <datalist id="anl-codes"><option value="+971">United Arab Emirates</option><option value="+966">Saudi Arabia</option><option value="+974">Qatar</option><option value="+973">Bahrain</option><option value="+968">Oman</option><option value="+965">Kuwait</option><option value="+44">United Kingdom</option><option value="+49">Germany</option><option value="+31">Netherlands</option><option value="+33">France</option><option value="+1">USA / Canada</option><option value="+65">Singapore</option><option value="+61">Australia</option><option value="+91">India</option><option value="+20">Egypt</option><option value="+27">South Africa</option></datalist>
+        </div>
         <div class="anl-row">
           <div class="anl-field"><label class="anl-label">Company</label><input class="anl-input" name="company"></div>
           <div class="anl-field"><label class="anl-label">Job Title</label><input class="anl-input" name="title"></div>
@@ -118,9 +126,11 @@
       var f = e.target, btn = f.querySelector('.anl-btn'), err = f.querySelector('.anl-err');
       var v = function (n) { return (f.elements[n].value || '').trim(); };
       err.style.display = 'none'; btn.disabled = true; btn.textContent = 'Subscribing…';
+      var code = f.querySelector('.anl-code'), num = f.querySelector('.anl-num');
+      var phone = ((code ? code.value.trim() : '') + ' ' + (num ? num.value.trim() : '')).trim();
       var res = await subscribe({
         first_name: v('first'), last_name: v('last') || null, email: v('email'),
-        phone: v('phone') || null, company_name: v('company') || null,
+        phone: phone || null, company_name: v('company') || null,
         job_title: v('title') || null, source: 'website_popup'
       });
       if (res.ok) {

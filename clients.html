@@ -153,8 +153,11 @@
               <input id="c_email" type="email" class="form-input" placeholder="you@company.com" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Phone</label>
-              <input id="c_phone" class="form-input" placeholder="+971 58 553 6439">
+              <label class="form-label">Phone <span class="req">*</span></label>
+              <div class="phone-field">
+                <input class="form-input phone-code" list="astrus-dialcodes" value="+971" aria-label="Dialing code">
+                <input id="c_phone" class="form-input phone-num" type="tel" inputmode="numeric" placeholder="58 553 6439" required>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -223,6 +226,7 @@
   </a>
 
   <script src="app.js"></script>
+  <script src="forms.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="crm.js"></script>
   <script>
@@ -237,7 +241,7 @@
           first_name: val('c_name'),
           company_name: val('c_company'),
           email: val('c_email'),
-          phone: val('c_phone') || null,
+          phone: window.astrusPhone(e.target),
           notes: notes,
           status: 'new'
         };

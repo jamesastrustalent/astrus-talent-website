@@ -23,6 +23,9 @@
 
 html { scroll-behavior: smooth; }
 
+/* anchored form/section targets land below the fixed nav, not under it */
+[id] { scroll-margin-top: 96px; }
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -188,6 +191,9 @@ nav .container { height: 100%; }
 .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,140,255,0.12); }
 .form-input::placeholder { color: rgba(139,154,176,0.5); }
 textarea.form-input { resize: none; min-height: 120px; line-height: 1.6; }
+.phone-field { display: flex; gap: 8px; }
+.phone-field .phone-code { flex: 0 0 116px; max-width: 116px; }
+.phone-field .phone-num { flex: 1; min-width: 0; }
 .btn-submit {
   width: 100%; background: var(--blue); color: #fff;
   font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;

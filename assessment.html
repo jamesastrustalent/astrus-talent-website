@@ -203,7 +203,7 @@
             <div class="form-group"><label class="form-label">Company <span class="req">*</span></label><input id="d_company" class="form-input" required></div>
             <div class="form-group"><label class="form-label">Email Address <span class="req">*</span></label><input id="d_email" type="email" class="form-input" required></div>
           </div>
-          <div class="form-group"><label class="form-label">Phone Number</label><input id="d_phone" class="form-input" placeholder="+971 58 553 6439"></div>
+          <div class="form-group"><label class="form-label">Phone Number <span class="req">*</span></label><div class="phone-field"><input class="form-input phone-code" list="astrus-dialcodes" value="+971" aria-label="Dialing code"><input id="d_phone" class="form-input phone-num" type="tel" inputmode="numeric" placeholder="58 553 6439" required></div></div>
           <div class="form-group"><label class="form-label">Anything You Would Like Us to Know?</label><textarea id="d_message" class="form-input"></textarea></div>
           <button type="submit" class="btn-submit">Request a Demo</button>
           <div class="privacy-note">Your details will be handled securely by Astrus Talent and used only to arrange your demo.</div>
@@ -259,6 +259,7 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="forms.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="crm.js"></script>
   <script>
@@ -271,7 +272,7 @@
           last_name: val('d_last') || null,
           company_name: val('d_company'),
           email: val('d_email'),
-          phone: val('d_phone') || null,
+          phone: window.astrusPhone(e.target),
           enquiry: val('d_message') || 'Assessment demo request',
           type: 'assessment_demo',
           status: 'new'
