@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Astrus form registry</title><meta name="robots" content="noindex"></head>
+<body>
+  <!-- Hidden static forms so Netlify detects & registers each form for email notifications.
+       The live site submits to these via AJAX (see crm.js / newsletter.js / jobs.html). -->
+
+  <form name="candidate-cv" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="candidate-cv">
+    <input name="first_name"><input name="last_name"><input name="email"><input name="phone">
+    <input name="job_ref"><input name="cv_url"><textarea name="cover_note"></textarea>
+  </form>
+
+  <form name="client-inquiry" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="client-inquiry">
+    <input name="first_name"><input name="company_name"><input name="email"><input name="phone">
+    <textarea name="notes"></textarea>
+  </form>
+
+  <form name="contact-enquiry" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="contact-enquiry">
+    <input name="first_name"><input name="email"><input name="phone"><input name="type">
+    <textarea name="enquiry"></textarea>
+  </form>
+
+  <form name="assessment-demo" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="assessment-demo">
+    <input name="first_name"><input name="last_name"><input name="company_name"><input name="email">
+    <input name="phone"><input name="type"><textarea name="enquiry"></textarea>
+  </form>
+
+  <form name="newsletter" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="newsletter">
+    <input name="first_name"><input name="last_name"><input name="email"><input name="phone">
+    <input name="company_name"><input name="job_title">
+  </form>
+
+  <form name="job-application" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="job-application">
+    <input name="job_title"><input name="first_name"><input name="last_name"><input name="email">
+    <input name="phone"><input name="linkedin_url"><input name="cv_url"><textarea name="cover_note"></textarea>
+  </form>
+</body>
+</html>

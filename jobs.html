@@ -685,33 +685,19 @@ async function submitApplication(e, jobId, jobTitle) {
     return
   }
 
-  // Email notification to James
-  try {
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer RESEND_API_KEY_PLACEHOLDER',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: 'applications@astrustalent.com',
-        to: 'info@astrustalent.com',
-        subject: `New Application — ${jobTitle}`,
-        html: `
-          <h2>New job application received</h2>
-          <p><strong>Role:</strong> ${jobTitle}</p>
-          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          ${payload.phone ? `<p><strong>Phone:</strong> ${payload.phone}</p>` : ''}
-          ${payload.linkedin_url ? `<p><strong>LinkedIn:</strong> <a href="${payload.linkedin_url}">${payload.linkedin_url}</a></p>` : ''}
-          ${payload.cv_url ? `<p><strong>CV:</strong> <a href="${payload.cv_url}">View CV</a></p>` : ''}
-          ${payload.cover_note ? `<p><strong>Cover Note:</strong><br>${payload.cover_note.replace(/\n/g,'<br>')}</p>` : ''}
-          <hr>
-          <p><a href="https://astrustalentcrm.netlify.app">View in CRM</a></p>
-        `
-      })
+  // Email a copy to info@astrustalent.com via Netlify Forms (fire-and-forget)
+  if (window.notifyEmail) {
+    window.notifyEmail('job-application', {
+      job_title: jobTitle,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone: payload.phone,
+      linkedin_url: payload.linkedin_url,
+      cv_url: payload.cv_url,
+      cover_note: payload.cover_note
     })
-  } catch(_) {}
+  }
 
   document.getElementById('apply-form-section').outerHTML = `
     <div class="success-box">

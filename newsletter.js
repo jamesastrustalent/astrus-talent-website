@@ -14,6 +14,25 @@
   function seen() { try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; } }
   function mark(v) { try { localStorage.setItem(STORAGE_KEY, v); } catch (e) {} }
 
+  /* Email copy via Netlify Forms (shared with crm.js; defined here too since the
+     pop-up runs on every page, including ones without crm.js). */
+  if (!window.notifyEmail) {
+    window.notifyEmail = function (formName, data) {
+      try {
+        var body = new URLSearchParams();
+        body.append('form-name', formName);
+        Object.keys(data || {}).forEach(function (k) {
+          if (data[k] != null && data[k] !== '') body.append(k, data[k]);
+        });
+        return fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        }).catch(function () {});
+      } catch (e) { return Promise.resolve(); }
+    };
+  }
+
   /* ---- Supabase insert (reuse crm.js if present, else self-load) ---- */
   function ensureSupabase() {
     return new Promise(function (resolve) {
@@ -128,11 +147,13 @@
       err.style.display = 'none'; btn.disabled = true; btn.textContent = 'Subscribing…';
       var code = f.querySelector('.anl-code'), num = f.querySelector('.anl-num');
       var phone = ((code ? code.value.trim() : '') + ' ' + (num ? num.value.trim() : '')).trim();
-      var res = await subscribe({
+      var payload = {
         first_name: v('first'), last_name: v('last') || null, email: v('email'),
         phone: phone || null, company_name: v('company') || null,
         job_title: v('title') || null, source: 'website_popup'
-      });
+      };
+      if (window.notifyEmail) window.notifyEmail('newsletter', payload);
+      var res = await subscribe(payload);
       if (res.ok) {
         overlay.querySelector('.anl-body').innerHTML =
           '<div class="anl-success"><div class="anl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>' +

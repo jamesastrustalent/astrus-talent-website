@@ -19,6 +19,25 @@
     return _db;
   }
 
+  /* Email a copy of the submission to info@astrustalent.com via Netlify Forms.
+     Fire-and-forget; never blocks or breaks the CRM save. */
+  if (!window.notifyEmail) {
+    window.notifyEmail = function (formName, data) {
+      try {
+        var body = new URLSearchParams();
+        body.append('form-name', formName);
+        Object.keys(data || {}).forEach(function (k) {
+          if (data[k] != null && data[k] !== '') body.append(k, data[k]);
+        });
+        return fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body.toString()
+        }).catch(function () {});
+      } catch (e) { return Promise.resolve(); }
+    };
+  }
+
   /* Insert a row into a CRM table. Returns { ok:true } or { ok:false, error }. */
   window.crmInsert = async function (table, payload) {
     try {
@@ -37,7 +56,7 @@
        table         - CRM table name
        buildPayload  - () => object of columns
        successMsg    - { title, body } shown in place of the form on success   */
-  window.crmSubmit = async function (formEl, table, buildPayload, successMsg) {
+  window.crmSubmit = async function (formEl, table, buildPayload, successMsg, formName) {
     var btn = formEl.querySelector('button[type="submit"], .btn-submit');
     var original = btn ? btn.textContent : '';
     if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
@@ -45,6 +64,7 @@
     var res;
     try {
       var payload = await buildPayload();
+      if (formName && window.notifyEmail) window.notifyEmail(formName, payload);
       res = await window.crmInsert(table, payload);
     } catch (err) {
       res = { ok: false, error: (err && err.message) || 'Something went wrong' };
