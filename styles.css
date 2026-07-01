@@ -194,6 +194,10 @@ textarea.form-input { resize: none; min-height: 120px; line-height: 1.6; }
 .phone-field { display: flex; gap: 8px; }
 .phone-field .phone-code { flex: 0 0 116px; max-width: 116px; }
 .phone-field .phone-num { flex: 1; min-width: 0; }
+.file-drop { display: flex; align-items: center; gap: 12px; width: 100%; background: rgba(255,255,255,0.04); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; padding: 14px 16px; cursor: pointer; color: var(--muted); font-size: 14px; transition: border-color .15s, background .15s, color .15s; }
+.file-drop:hover { border-color: var(--blue); background: rgba(26,140,255,0.05); }
+.file-drop.has-file { border-style: solid; border-color: var(--blue-border); color: var(--text); }
+.file-drop svg { width: 20px; height: 20px; stroke: var(--blue); flex-shrink: 0; }
 .btn-submit {
   width: 100%; background: var(--blue); color: #fff;
   font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;

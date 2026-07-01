@@ -32,6 +32,19 @@
     var n = num ? num.value.trim() : '';
     return (c + ' ' + n).trim();
   };
+  /* show the chosen filename inside a .file-drop upload control */
+  document.addEventListener('change', function (e) {
+    var input = e.target;
+    if (!input || input.type !== 'file') return;
+    var drop = input.closest('.file-drop');
+    if (!drop) return;
+    var span = drop.querySelector('.file-drop-text');
+    if (span && !drop.dataset.def) drop.dataset.def = span.textContent;
+    var f = input.files && input.files[0];
+    if (span) span.textContent = f ? f.name : drop.dataset.def;
+    drop.classList.toggle('has-file', !!f);
+  });
+
   if (document.readyState !== 'loading') inject();
   else document.addEventListener('DOMContentLoaded', inject);
 })();

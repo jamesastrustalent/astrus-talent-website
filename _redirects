@@ -2,5 +2,8 @@
 # Uncomment the line below if you want www.astrustalent.com to redirect to astrustalent.com
 # https://www.astrustalent.com/* https://astrustalent.com/:splat 301!
 
+# Clean job URLs (shareable) -> serve the jobs page, which reads the id from the path
+/jobs/*  /jobs.html  200
+
 # 404 fallback
 /*  /index.html  200

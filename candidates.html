@@ -135,9 +135,13 @@
             <input id="v_role" class="form-input" placeholder="e.g. Critical Facilities Engineer">
           </div>
           <div class="form-group">
-            <label class="form-label">Link to Your CV <span class="req">*</span></label>
-            <input id="v_cv" class="form-input" placeholder="Google Drive, Dropbox, or OneDrive link" required>
-            <div class="privacy-note" style="text-align:left;margin-top:6px;">Share a link to your CV — Google Drive, Dropbox, OneDrive, etc.</div>
+            <label class="form-label">Upload Your CV <span class="req">*</span></label>
+            <label class="file-drop">
+              <input id="v_cv" type="file" accept=".pdf,.doc,.docx" required hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
+              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 8MB)</span>
+            </label>
+            <div class="privacy-note" style="text-align:left;margin-top:6px;">Your CV is stored securely and shared only with Astrus Talent.</div>
           </div>
           <div class="form-group">
             <label class="form-label">Anything Else?</label>
@@ -211,7 +215,9 @@
     function submitCV(e) {
       e.preventDefault();
       var val = function (id) { return document.getElementById(id).value.trim(); };
-      return window.crmSubmit(e.target, 'job_applications', function () {
+      return window.crmSubmit(e.target, 'job_applications', async function () {
+        var up = await window.crmUploadCV(document.getElementById('v_cv').files[0]);
+        if (!up.ok) throw new Error(up.error);
         return {
           job_id: null,
           first_name: val('v_first'),
@@ -219,7 +225,7 @@
           email: val('v_email'),
           phone: window.astrusPhone(e.target),
           job_ref: val('v_role') || null,
-          cv_url: val('v_cv') || null,
+          cv_url: up.url,
           cover_note: val('v_message') || null
         };
       }, { title: 'CV received', body: 'Thank you. One of our specialists will review your details and be in touch about opportunities that match your skills.' });

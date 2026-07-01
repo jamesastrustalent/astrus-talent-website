@@ -216,6 +216,10 @@
     .form-input::placeholder { color: rgba(139,154,176,.5) }
     textarea.form-input { resize: none; min-height: 120px; line-height: 1.6 }
     .form-hint { font-size: 12px; color: var(--muted); margin-top: 5px; opacity: .7 }
+    .file-drop { display: flex; align-items: center; gap: 12px; width: 100%; background: rgba(255,255,255,.04); border: 1px dashed rgba(255,255,255,.2); border-radius: 8px; padding: 14px 16px; cursor: pointer; color: var(--muted); font-size: 14px; transition: border-color .15s, background .15s, color .15s }
+    .file-drop:hover { border-color: var(--blue); background: rgba(26,140,255,.05) }
+    .file-drop.has-file { border-style: solid; border-color: var(--blue-border); color: var(--text) }
+    .file-drop svg { width: 20px; height: 20px; stroke: var(--blue); flex-shrink: 0 }
     .phone-field { display: flex; gap: 8px }
     .phone-field .phone-code { flex: 0 0 104px; max-width: 104px }
     .phone-field .phone-num { flex: 1; min-width: 0 }
@@ -405,7 +409,8 @@ function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function fmtMoney(n) { return n != null ? '£' + Number(n).toLocaleString() : null }
 
 const params = new URLSearchParams(window.location.search)
-const jobId = params.get('job')
+const pathMatch = window.location.pathname.match(/\/jobs\/([0-9a-fA-F-]{6,})/)
+const jobId = (pathMatch && pathMatch[1]) || params.get('job')
 
 async function init() {
   if (jobId) {
@@ -548,7 +553,7 @@ async function renderJobDetail(id) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg>
             Copy link
           </button>
-          <a class="btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(location.origin + '/jobs.html?job=' + id)}" target="_blank" rel="noopener">
+          <a class="btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(location.origin + '/jobs/' + id)}" target="_blank" rel="noopener">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4V8zM8 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24H8V8z"/></svg>
             Share on LinkedIn
           </a>
@@ -602,9 +607,12 @@ async function renderJobDetail(id) {
             <input id="a_linkedin_url" class="form-input" placeholder="https://linkedin.com/in/your-name">
           </div>
           <div class="form-group">
-            <label class="form-label">CV Link</label>
-            <input id="a_cv_url" class="form-input" placeholder="Google Drive, Dropbox, or OneDrive link">
-            <div class="form-hint">Share a link to your CV — Google Drive, Dropbox, OneDrive, etc.</div>
+            <label class="form-label">Upload Your CV <span style="color:#1a8cff">*</span></label>
+            <label class="file-drop">
+              <input id="a_cv_url" type="file" accept=".pdf,.doc,.docx" required hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
+              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 8MB)</span>
+            </label>
           </div>
           <div class="form-group">
             <label class="form-label">Cover Note <span class="req">*</span></label>
@@ -628,7 +636,8 @@ function showApplyForm() {
 }
 
 function copyJobLink(btn) {
-  var url = location.origin + location.pathname + location.search;
+  var id = new URLSearchParams(location.search).get('job') || (location.pathname.split('/jobs/')[1]||'').replace(/\/$/,'');
+  var url = id ? location.origin + '/jobs/' + id : location.href;
   var done = function () { var t = btn.querySelector('svg') ? 'Link copied' : 'Link copied'; btn.textContent = 'Link copied'; setTimeout(function () { location.reload && (btn.textContent = 'Copy link'); }, 1800); };
   if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done).catch(function(){ prompt('Copy this link:', url); }); }
   else { prompt('Copy this link:', url); }
@@ -646,6 +655,15 @@ async function submitApplication(e, jobId, jobTitle) {
   const lastName = document.getElementById('a_last_name').value.trim()
   const email = document.getElementById('a_email').value.trim()
 
+  const up = await window.crmUploadCV(document.getElementById('a_cv_url').files[0])
+  if (!up.ok) {
+    btn.disabled = false
+    btn.textContent = 'Submit Application'
+    errEl.textContent = up.error + ' — or email us at info@astrustalent.com'
+    errEl.style.display = 'block'
+    return
+  }
+
   const payload = {
     job_id: jobId,
     first_name: firstName,
@@ -653,7 +671,7 @@ async function submitApplication(e, jobId, jobTitle) {
     email,
     phone: window.astrusPhone(e.target),
     linkedin_url: document.getElementById('a_linkedin_url').value.trim() || null,
-    cv_url: document.getElementById('a_cv_url').value.trim() || null,
+    cv_url: up.url,
     cover_note: document.getElementById('a_cover_note').value.trim(),
   }
 
@@ -712,6 +730,7 @@ document.getElementById('nav-toggle').addEventListener('click', () => {
 
 init()
 </script>
+  <script src="crm.js"></script>
   <script src="forms.js"></script>
   <script src="newsletter.js"></script>
 </body>

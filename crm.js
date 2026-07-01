@@ -42,7 +42,13 @@
     var original = btn ? btn.textContent : '';
     if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
 
-    var res = await window.crmInsert(table, buildPayload());
+    var res;
+    try {
+      var payload = await buildPayload();
+      res = await window.crmInsert(table, payload);
+    } catch (err) {
+      res = { ok: false, error: (err && err.message) || 'Something went wrong' };
+    }
 
     if (res.ok) {
       var card = formEl.closest('.form-card') || formEl;
@@ -67,8 +73,33 @@
       if (btn) btn.parentNode.insertBefore(errEl, btn.nextSibling);
       else formEl.appendChild(errEl);
     }
-    errEl.innerHTML = 'Something went wrong. Please try again or email ' +
-      '<a href="mailto:info@astrustalent.com" style="color:var(--blue)">info@astrustalent.com</a>.';
+    errEl.innerHTML = '';
+    errEl.appendChild(document.createTextNode((res.error || 'Something went wrong') + '. '));
+    errEl.insertAdjacentHTML('beforeend', 'Please try again or email <a href="mailto:info@astrustalent.com" style="color:var(--blue)">info@astrustalent.com</a>.');
     return false;
+  };
+
+  /* Upload a CV file to the public "cvs" bucket; returns { ok, url }. */
+  function genId() {
+    try { return crypto.randomUUID(); }
+    catch (e) { return 'cv-' + Date.now() + '-' + Math.round(Math.random() * 1e9).toString(36); }
+  }
+  window.crmUploadCV = async function (file) {
+    try {
+      if (!file) return { ok: false, error: 'Please attach your CV' };
+      var ext = (file.name.split('.').pop() || '').toLowerCase();
+      if (['pdf', 'doc', 'docx'].indexOf(ext) < 0) return { ok: false, error: 'CV must be a PDF, DOC or DOCX' };
+      if (file.size > 8 * 1024 * 1024) return { ok: false, error: 'CV is too large (max 8MB)' };
+      var client = db();
+      if (!client) return { ok: false, error: 'Upload unavailable, please try again' };
+      var safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-60);
+      var name = genId() + '-' + safe;
+      var res = await client.storage.from('cvs').upload(name, file, { upsert: false, contentType: file.type || undefined });
+      if (res.error) return { ok: false, error: 'Could not upload CV: ' + res.error.message };
+      var pub = client.storage.from('cvs').getPublicUrl(name);
+      return { ok: true, url: pub.data.publicUrl };
+    } catch (e) {
+      return { ok: false, error: 'Could not upload CV' };
+    }
   };
 })();
