@@ -89,7 +89,7 @@
       --blue-dim: rgba(26,140,255,0.1);
       --blue-border: rgba(26,140,255,0.3);
       --text: #e7ebef;
-      --muted: #7b899d;
+      --muted: #96a3b8;
       --nav-h: 72px;
     }
 
@@ -1031,16 +1031,20 @@
       a.addEventListener('click', () => mobileMenu.classList.remove('open'));
     });
 
-    // Scroll fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // Scroll fade-in (robust: never leave content blank)
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const revealAll = () => fadeEls.forEach(el => el.classList.add('visible'));
+    if (window.location.hash || !('IntersectionObserver' in window) || !fadeEls.length) {
+      revealAll();
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
+      fadeEls.forEach(el => observer.observe(el));
+      setTimeout(revealAll, 1200);
+    }
 
   </script>
   <script>

@@ -64,17 +64,17 @@
     transform:translateY(12px);transition:transform .25s ease;max-height:92vh;overflow-y:auto;}
   .anl-overlay.open .anl-card{transform:translateY(0);}
   .anl-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;cursor:pointer;
-    background:rgba(255,255,255,.06);color:#7b899d;border-radius:8px;font-size:18px;line-height:1;}
+    background:rgba(255,255,255,.06);color:#96a3b8;border-radius:8px;font-size:18px;line-height:1;}
   .anl-close:hover{background:rgba(255,255,255,.12);color:#e7ebef;}
   .anl-icon{width:46px;height:46px;border-radius:11px;background:rgba(26,140,255,.12);
     display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
   .anl-icon svg{width:24px;height:24px;stroke:#1a8cff;}
   .anl-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#e7ebef;
     letter-spacing:-.4px;margin:0 0 8px;}
-  .anl-sub{font-size:14px;color:#7b899d;line-height:1.6;margin:0 0 20px;}
+  .anl-sub{font-size:14px;color:#96a3b8;line-height:1.6;margin:0 0 20px;}
   .anl-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .anl-field{margin-bottom:12px;}
-  .anl-label{display:block;font-size:12px;font-weight:600;color:#7b899d;margin-bottom:6px;}
+  .anl-label{display:block;font-size:12px;font-weight:600;color:#96a3b8;margin-bottom:6px;}
   .anl-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
     border-radius:8px;color:#e7ebef;font-family:inherit;font-size:14px;padding:11px 13px;outline:none;
     transition:border-color .15s,box-shadow .15s;}
@@ -89,7 +89,7 @@
     padding:13px;border:none;border-radius:9px;cursor:pointer;margin-top:6px;display:flex;
     align-items:center;justify-content:center;gap:8px;transition:background .2s;}
   .anl-btn:hover{background:#1578e0;} .anl-btn:disabled{opacity:.7;cursor:default;}
-  .anl-note{font-size:11px;color:#7b899d;text-align:center;margin-top:12px;opacity:.8;}
+  .anl-note{font-size:11px;color:#96a3b8;text-align:center;margin-top:12px;opacity:.8;}
   .anl-err{font-size:12px;color:#ff6b6b;margin-top:10px;text-align:center;}
   .anl-success{text-align:center;padding:14px 4px;}
   .anl-success .anl-icon{margin:0 auto 16px;background:rgba(37,211,102,.12);}
