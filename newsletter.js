@@ -82,6 +82,9 @@
   .anl-input::placeholder{color:rgba(123,137,157,.6);}
   .anl-phone{display:flex;gap:8px;}
   .anl-phone .anl-code{flex:0 0 104px;} .anl-phone .anl-num{flex:1;min-width:0;}
+  .anl-input:-webkit-autofill,.anl-input:-webkit-autofill:hover,.anl-input:-webkit-autofill:focus{
+    -webkit-text-fill-color:#e7ebef !important;-webkit-box-shadow:0 0 0 1000px #20232a inset !important;
+    box-shadow:0 0 0 1000px #20232a inset !important;caret-color:#e7ebef;transition:background-color 9999s ease-in-out 0s;}
   .anl-btn{width:100%;background:#1a8cff;color:#fff;font-family:inherit;font-weight:600;font-size:15px;
     padding:13px;border:none;border-radius:9px;cursor:pointer;margin-top:6px;display:flex;
     align-items:center;justify-content:center;gap:8px;transition:background .2s;}
