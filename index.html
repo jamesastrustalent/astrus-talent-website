@@ -1054,6 +1054,9 @@
       const ctx = canvas.getContext('2d');
       const W = 460, H = 460, R = 205, CX = W / 2, CY = H / 2;
       let angle = 0;
+      let rafId = null, onScreen = true;
+      const shouldRun = () => onScreen && !document.hidden;
+      function start() { if (shouldRun() && rafId === null) draw(); }
 
       function toSphere(latDeg, lngDeg) {
         const r = latDeg * Math.PI / 180, l = lngDeg * Math.PI / 180;
@@ -1212,9 +1215,14 @@
           ctx.fill();
         }
 
-        requestAnimationFrame(draw);
+        rafId = shouldRun() ? requestAnimationFrame(draw) : null;
       }
-      draw();
+      // Only animate when the globe is on screen and the tab is visible (saves CPU)
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((e) => { onScreen = e[0].isIntersecting; start(); }, { threshold: 0 }).observe(canvas);
+      }
+      document.addEventListener('visibilitychange', start);
+      start();
     })();
   </script>
   <script src="newsletter.js"></script>
