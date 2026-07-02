@@ -138,6 +138,7 @@
               <div class="form-group"><label class="form-label">Email <span class="req">*</span></label><input id="k_email" type="email" class="form-input" required></div>
             </div>
             <div class="form-group"><label class="form-label">Phone <span class="req">*</span></label><div class="phone-field"><input class="form-input phone-code" list="astrus-dialcodes" value="+971" aria-label="Dialing code"><input id="k_phone" class="form-input phone-num" type="tel" inputmode="numeric" placeholder="58 553 6439" required></div></div>
+            <div class="form-group"><label class="form-label">LinkedIn Profile <span class="req">*</span></label><input id="k_linkedin" type="url" class="form-input" placeholder="https://linkedin.com/in/your-name" required></div>
             <div class="form-group"><label class="form-label">Message <span class="req">*</span></label><textarea id="k_message" class="form-input" placeholder="How can we help?" required></textarea></div>
             <button type="submit" class="btn-submit">Send Enquiry</button>
             <div class="privacy-note">Your details will be handled securely by Astrus Talent and used only to respond to your enquiry.</div>
@@ -217,7 +218,7 @@
           first_name: val('k_name'),
           email: val('k_email'),
           phone: window.astrusPhone(e.target),
-          enquiry: val('k_message'),
+          enquiry: val('k_message') + '\n\nLinkedIn: ' + val('k_linkedin'),
           type: enquiryType === 'Client' ? 'client_enquiry' : 'candidate_enquiry',
           status: 'new'
         };

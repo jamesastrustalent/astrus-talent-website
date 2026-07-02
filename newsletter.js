@@ -121,6 +121,7 @@
           <div class="anl-field"><label class="anl-label">Company</label><input class="anl-input" name="company"></div>
           <div class="anl-field"><label class="anl-label">Job Title</label><input class="anl-input" name="title"></div>
         </div>
+        <div class="anl-field"><label class="anl-label">LinkedIn Profile *</label><input class="anl-input" name="linkedin" type="url" placeholder="https://linkedin.com/in/your-name" required></div>
         <button class="anl-btn" type="submit">Subscribe
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -153,7 +154,7 @@
       var payload = {
         first_name: v('first'), last_name: v('last') || null, email: v('email'),
         phone: phone || null, company_name: v('company') || null,
-        job_title: v('title') || null, source: 'website_popup'
+        job_title: v('title') || null, linkedin_url: v('linkedin') || null, source: 'website_popup'
       };
       if (window.notifyEmail) window.notifyEmail('newsletter', payload);
       var res = await subscribe(payload);

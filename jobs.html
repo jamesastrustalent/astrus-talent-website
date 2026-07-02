@@ -609,8 +609,8 @@ async function renderJobDetail(id) {
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">LinkedIn Profile</label>
-            <input id="a_linkedin_url" class="form-input" placeholder="https://linkedin.com/in/your-name">
+            <label class="form-label">LinkedIn Profile <span style="color:#1a8cff">*</span></label>
+            <input id="a_linkedin_url" type="url" class="form-input" placeholder="https://linkedin.com/in/your-name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Upload Your CV <span style="color:#1a8cff">*</span></label>
@@ -621,8 +621,8 @@ async function renderJobDetail(id) {
             </label>
           </div>
           <div class="form-group">
-            <label class="form-label">Cover Note <span class="req">*</span></label>
-            <textarea id="a_cover_note" class="form-input" placeholder="Tell us why you're a great fit for this role…" required></textarea>
+            <label class="form-label">Cover Note</label>
+            <textarea id="a_cover_note" class="form-input" placeholder="Tell us why you're a great fit for this role…"></textarea>
           </div>
           <button type="submit" class="btn-submit-form" id="submit-btn">Submit Application</button>
           <div class="privacy-note">Your details will be handled securely by Astrus Talent and used only in connection with this application.</div>
