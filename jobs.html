@@ -444,7 +444,7 @@ async function renderJobList() {
 
   const { data: jobs, error } = await db
     .from('jobs')
-    .select('id, title, location, contract_type, salary_min, salary_max, advert_text, clients(hq_city)')
+    .select('id, title, location, contract_type, salary_min, salary_max, advert_text')
     .eq('published', true)
     .order('created_at', { ascending: false })
 
@@ -498,7 +498,7 @@ async function renderJobDetail(id) {
 
   const { data: job, error } = await db
     .from('jobs')
-    .select('*, clients(hq_city, industry)')
+    .select('*')
     .eq('id', id)
     .eq('published', true)
     .single()
