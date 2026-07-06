@@ -444,7 +444,7 @@ async function renderJobList() {
 
   const { data: jobs, error } = await db
     .from('jobs')
-    .select('id, title, location, contract_type, salary_min, salary_max, advert_text, clients(company_name, hq_city)')
+    .select('id, title, location, contract_type, salary_min, salary_max, advert_text, clients(hq_city)')
     .eq('published', true)
     .order('created_at', { ascending: false })
 
@@ -461,7 +461,7 @@ async function renderJobList() {
   }
 
   grid.innerHTML = jobs.map(job => {
-    const company = job.clients?.company_name
+    const company = null // client name intentionally hidden on public adverts
     const location = job.location || job.clients?.hq_city
     const sMin = fmtMoney(job.salary_min)
     const sMax = fmtMoney(job.salary_max)
@@ -498,7 +498,7 @@ async function renderJobDetail(id) {
 
   const { data: job, error } = await db
     .from('jobs')
-    .select('*, clients(company_name, hq_city, industry)')
+    .select('*, clients(hq_city, industry)')
     .eq('id', id)
     .eq('published', true)
     .single()
@@ -520,7 +520,7 @@ async function renderJobDetail(id) {
 
   document.title = `${job.title} | Astrus Talent`
 
-  const company = job.clients?.company_name
+  const company = null // client name intentionally hidden on public adverts
   const location = job.location || job.clients?.hq_city
   const sMin = fmtMoney(job.salary_min)
   const sMax = fmtMoney(job.salary_max)
