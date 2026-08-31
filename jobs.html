@@ -470,7 +470,7 @@ async function renderJobList() {
 
   grid.innerHTML = jobs.map(job => {
     const company = null // client name intentionally hidden on public adverts
-    const location = job.location || job.clients?.hq_city
+    const location = job.location
     const sMin = fmtMoney(job.salary_min)
     const sMax = fmtMoney(job.salary_max)
     const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
@@ -506,7 +506,7 @@ async function renderJobDetail(id) {
 
   const { data: job, error } = await db
     .from('jobs')
-    .select('*')
+    .select('id, created_at, title, location, contract_type, salary_min, salary_max, advert_text, published')
     .eq('id', id)
     .eq('published', true)
     .single()
@@ -529,7 +529,7 @@ async function renderJobDetail(id) {
   document.title = `${job.title} | Astrus Talent`
 
   const company = null // client name intentionally hidden on public adverts
-  const location = job.location || job.clients?.hq_city
+  const location = job.location
   const sMin = fmtMoney(job.salary_min)
   const sMax = fmtMoney(job.salary_max)
   const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
@@ -542,8 +542,8 @@ async function renderJobDetail(id) {
     salary   ? `<span class="meta-tag salary">${esc(salary)}</span>` : '',
   ].filter(Boolean).join('')
 
-  const advertBody = job.advert_text || job.description || ''
-  const requirements = (!job.advert_text && job.requirements) ? job.requirements : ''
+  const advertBody = job.advert_text || ''   // advert_text ONLY. never fall back to the internal description
+  const requirements = ''
 
   document.getElementById('root').innerHTML = `
     <div class="job-detail container">
