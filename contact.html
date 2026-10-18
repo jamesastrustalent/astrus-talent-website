@@ -222,11 +222,12 @@
       e.preventDefault();
       var val = function (id) { return document.getElementById(id).value.trim(); };
       return window.crmSubmit(e.target, 'contact_messages', function () {
+        var linkedin = window.crmHttpUrl(val('k_linkedin'));
         return {
           first_name: val('k_name'),
           email: val('k_email'),
           phone: window.astrusPhone(e.target),
-          enquiry: val('k_message') + '\n\nLinkedIn: ' + val('k_linkedin'),
+          enquiry: val('k_message') + '\n\nLinkedIn: ' + linkedin,
           type: enquiryType === 'Client' ? 'client_enquiry' : 'candidate_enquiry',
           status: 'new'
         };

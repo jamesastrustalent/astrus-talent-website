@@ -282,7 +282,7 @@
           company_name: val('d_company'),
           email: val('d_email'),
           phone: window.astrusPhone(e.target),
-          enquiry: (val('d_message') || 'Assessment demo request') + '\n\nLinkedIn: ' + val('d_linkedin'),
+          enquiry: (val('d_message') || 'Assessment demo request') + '\n\nLinkedIn: ' + window.crmHttpUrl(val('d_linkedin')),
           type: 'assessment_demo',
           status: 'new'
         };

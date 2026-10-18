@@ -6,8 +6,6 @@
    Include on any page with:  <script src="newsletter.js"></script>
    ========================================================================== */
 (function () {
-  var SUPABASE_URL = 'https://ziciunvqtrcuzcudtfcl.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_iHYbQNjd71dqo-Ls-YVirw_EgRKpKpT';
   var STORAGE_KEY = 'astrus_nl_v1';
   var SHOW_DELAY = 6000; // ms after page load
 
@@ -33,24 +31,32 @@
     };
   }
 
-  /* ---- Supabase insert (reuse crm.js if present, else self-load) ---- */
-  function ensureSupabase() {
+  /* ---- Supabase insert via crm.js (sanitised). Pages that don't include
+        crm.js load it on submit. There is no unsanitised fallback. ---- */
+  function loadScript(src, ready) {
     return new Promise(function (resolve) {
-      if (window.supabase) return resolve();
+      if (ready()) return resolve();
       var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-      s.onload = resolve; s.onerror = resolve;
+      s.src = src;
+      s.onload = function () { resolve(); };
+      s.onerror = function () { resolve(); };
       document.head.appendChild(s);
     });
   }
-  var _client = null;
+  function ensureSupabase() {
+    return loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2', function () { return !!window.supabase; });
+  }
+  function ensureCrm() {
+    return loadScript('/crm.js', function () { return !!(window.crmInsert && window.crmPrepare); });
+  }
   async function subscribe(payload) {
-    if (window.crmInsert) return window.crmInsert('newsletter_subscribers', payload);
     await ensureSupabase();
-    if (!window.supabase) return { ok: false, error: 'offline' };
-    if (!_client) _client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    var res = await _client.from('newsletter_subscribers').insert(payload);
-    return res.error ? { ok: false, error: res.error.message } : { ok: true };
+    await ensureCrm();
+    if (!window.crmPrepare || !window.crmInsert) return { ok: false, error: 'offline' };
+    var prepared = window.crmPrepare('newsletter_subscribers', payload);
+    if (!prepared.ok) return prepared;
+    if (window.crmNotify) window.crmNotify('newsletter', prepared.payload);
+    return window.crmInsert('newsletter_subscribers', prepared.payload);
   }
 
   /* ---- Styles ---- */
@@ -156,7 +162,6 @@
         phone: phone || null, company_name: v('company') || null,
         job_title: v('title') || null, linkedin_url: v('linkedin') || null, source: 'website_popup'
       };
-      if (window.notifyEmail) window.notifyEmail('newsletter', payload);
       var res = await subscribe(payload);
       if (res.ok) {
         overlay.querySelector('.anl-body').innerHTML =
@@ -166,7 +171,8 @@
         setTimeout(function () { close('subscribed'); }, 2200);
       } else {
         btn.disabled = false; btn.innerHTML = 'Subscribe';
-        err.textContent = 'Something went wrong. Please try again.'; err.style.display = 'block';
+        err.textContent = res.validation && res.error ? res.error : 'Something went wrong. Please try again.';
+        err.style.display = 'block';
       }
     });
 
