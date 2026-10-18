@@ -149,9 +149,9 @@
           <div class="form-group">
             <label class="form-label">Upload Your CV <span class="req">*</span></label>
             <label class="file-drop">
-              <input id="v_cv" type="file" accept=".pdf,.doc,.docx" required hidden>
+              <input id="v_cv" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required hidden>
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
-              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 8MB)</span>
+              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 10MB)</span>
             </label>
             <div class="privacy-note" style="text-align:left;margin-top:6px;">Your CV is stored securely and shared only with Astrus Talent.</div>
           </div>
@@ -228,9 +228,7 @@
       e.preventDefault();
       var val = function (id) { return document.getElementById(id).value.trim(); };
       return window.crmSubmit(e.target, 'job_applications', async function () {
-        var up = await window.crmUploadCV(document.getElementById('v_cv').files[0]);
-        if (!up.ok) throw new Error(up.error);
-        return {
+        var draft = {
           job_id: null,
           first_name: val('v_first'),
           last_name: val('v_last') || null,
@@ -238,9 +236,15 @@
           phone: window.astrusPhone(e.target),
           job_ref: val('v_role') || null,
           linkedin_url: val('v_linkedin'),
-          cv_url: up.url,
           cover_note: val('v_message') || null
         };
+        var prepared = window.crmPrepare('job_applications', draft, { partial: true });
+        if (!prepared.ok) throw new Error(prepared.error);
+        var fileInput = document.getElementById('v_cv');
+        var up = await window.crmUploadCV(fileInput && fileInput.files && fileInput.files[0]);
+        if (!up.ok) throw new Error(up.error);
+        prepared.payload.cv_url = up.path;
+        return prepared.payload;
       }, { title: 'CV received', body: 'Thank you. One of our specialists will review your details and be in touch about opportunities that match your skills.' }, 'candidate-cv');
     }
   </script>

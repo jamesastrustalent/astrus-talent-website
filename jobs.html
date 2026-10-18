@@ -419,8 +419,23 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 const CONTRACT_LABELS = { permanent:'Permanent', contract:'Contract', interim:'Interim', temp:'Temporary' }
 
-function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
-function fmtMoney(n) { return n != null ? '£' + Number(n).toLocaleString() : null }
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+function fmtMoney(n) {
+  if (n == null || n === '') return null
+  var num = Number(n)
+  if (!isFinite(num)) return null
+  return '£' + num.toLocaleString()
+}
+function asText(v) { return typeof v === 'string' ? v.trim() : '' }
+function isUuid(v) { return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(v || '')) }
+var currentJob = { id: '', title: '' }
 
 const params = new URLSearchParams(window.location.search)
 const pathMatch = window.location.pathname.match(/\/jobs\/([0-9a-fA-F-]{6,})/)
@@ -450,16 +465,27 @@ async function renderJobList() {
       </div>
     </section>`
 
+  // public.jobs_public only. Columns used here are a subset of
+  // id, created_at, title, location, contract_type, salary_min, salary_max, advert_text, published.
   const { data: jobs, error } = await db
-    .from('jobs')
-    .select('id, title, location, contract_type, salary_min, salary_max, advert_text')
+    .from('jobs_public')
+    .select('id, title, location, contract_type, salary_min, salary_max')
     .eq('published', true)
     .order('created_at', { ascending: false })
 
   const grid = document.getElementById('jobs-grid')
   if (!grid) return
 
-  if (error || !jobs?.length) {
+  if (error) {
+    grid.innerHTML = `
+      <div class="state-box">
+        <p style="font-size:18px;font-weight:600;margin-bottom:8px">Roles are unavailable right now</p>
+        <p>Please try again shortly, or <a href="mailto:info@astrustalent.com" style="color:var(--blue)">email us</a> to discuss your search.</p>
+      </div>`
+    return
+  }
+
+  if (!jobs?.length) {
     grid.innerHTML = `
       <div class="state-box">
         <p style="font-size:18px;font-weight:600;margin-bottom:8px">No open roles at the moment</p>
@@ -469,25 +495,24 @@ async function renderJobList() {
   }
 
   grid.innerHTML = jobs.map(job => {
-    const company = null // client name intentionally hidden on public adverts
-    const location = job.location
+    if (!isUuid(job.id)) return ''
+    const location = asText(job.location)
+    const title = asText(job.title) || 'Untitled role'
     const sMin = fmtMoney(job.salary_min)
     const sMax = fmtMoney(job.salary_max)
     const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
     const contract = CONTRACT_LABELS[job.contract_type] || null
 
     const tags = [
-      company  ? `<span class="meta-tag">${esc(company)}</span>` : '',
       location ? `<span class="meta-tag">${esc(location)}</span>` : '',
       contract ? `<span class="meta-tag">${esc(contract)}</span>` : '',
       salary   ? `<span class="meta-tag salary">${esc(salary)}</span>` : '',
     ].filter(Boolean).join('')
 
     return `
-      <div class="job-card" onclick="window.location.href='jobs.html?job=${job.id}'">
+      <div class="job-card" data-job-id="${esc(job.id)}">
         <div class="job-card-body">
-          <div class="job-card-title">${esc(job.title)}</div>
-          ${company ? `<div style="font-size:14px;color:var(--muted);margin-top:2px">${esc(company)}</div>` : ''}
+          <div class="job-card-title">${esc(title)}</div>
           ${tags ? `<div class="job-card-meta">${tags}</div>` : ''}
         </div>
         <div class="job-card-arrow">
@@ -495,6 +520,13 @@ async function renderJobList() {
         </div>
       </div>`
   }).join('')
+
+  grid.querySelectorAll('.job-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-job-id')
+      if (isUuid(id)) window.location.href = 'jobs.html?job=' + encodeURIComponent(id)
+    })
+  })
 }
 
 // ── DETAIL VIEW ────────────────────────────────────────
@@ -504,46 +536,41 @@ async function renderJobDetail(id) {
       <div class="state-box"><div class="spinner"></div></div>
     </div>`
 
+  if (!isUuid(id)) {
+    renderMissingJob()
+    return
+  }
+
   const { data: job, error } = await db
-    .from('jobs')
-    .select('id, created_at, title, location, contract_type, salary_min, salary_max, advert_text, published')
+    .from('jobs_public')
+    .select('title, location, contract_type, salary_min, salary_max, advert_text')
     .eq('id', id)
     .eq('published', true)
     .single()
 
   if (error || !job) {
-    document.getElementById('root').innerHTML = `
-      <div class="job-detail container">
-        <a href="jobs.html" class="back-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          All Jobs
-        </a>
-        <div class="state-box">
-          <p style="font-size:18px;font-weight:600;margin-bottom:8px">Role not found</p>
-          <p>This role may have been filled. <a href="jobs.html" style="color:var(--blue)">View all open roles</a>.</p>
-        </div>
-      </div>`
+    renderMissingJob(!!error && error.code !== 'PGRST116')
     return
   }
 
-  document.title = `${job.title} | Astrus Talent`
+  currentJob = { id: id, title: asText(job.title) }
+  document.title = `${currentJob.title || 'Role'} | Astrus Talent`
 
-  const company = null // client name intentionally hidden on public adverts
-  const location = job.location
+  const location = asText(job.location)
   const sMin = fmtMoney(job.salary_min)
   const sMax = fmtMoney(job.salary_max)
   const salary = sMin && sMax ? `${sMin} – ${sMax}` : sMin || sMax
   const contract = CONTRACT_LABELS[job.contract_type] || null
+  const title = currentJob.title || 'Untitled role'
+  const advertBody = asText(job.advert_text)
 
   const tags = [
-    company  ? `<span class="meta-tag">${esc(company)}</span>` : '',
     location ? `<span class="meta-tag">${esc(location)}</span>` : '',
     contract ? `<span class="meta-tag">${esc(contract)}</span>` : '',
     salary   ? `<span class="meta-tag salary">${esc(salary)}</span>` : '',
   ].filter(Boolean).join('')
 
-  const advertBody = job.advert_text || ''   // advert_text ONLY. never fall back to the internal description
-  const requirements = ''
+  const shareUrl = encodeURIComponent(locationOrigin() + '/jobs/' + id)
 
   document.getElementById('root').innerHTML = `
     <div class="job-detail container">
@@ -553,21 +580,20 @@ async function renderJobDetail(id) {
       </a>
 
       <div class="job-detail-header">
-        <div class="job-detail-title">${esc(job.title)}</div>
-        ${company ? `<div class="job-detail-company">${esc(company)}</div>` : ''}
+        <div class="job-detail-title">${esc(title)}</div>
         ${tags ? `<div class="job-card-meta">${tags}</div>` : ''}
         <div class="apply-btn-wrap">
-          <button class="btn-apply" id="apply-btn" onclick="showApplyForm()">
+          <button class="btn-apply" id="apply-btn" type="button">
             Apply for this Role
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
         <div class="job-share">
-          <button type="button" class="btn-share" onclick="copyJobLink(this)">
+          <button type="button" class="btn-share" id="copy-job-link">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7L12 19"/></svg>
             Copy link
           </button>
-          <a class="btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(location.origin + '/jobs/' + id)}" target="_blank" rel="noopener">
+          <a class="btn-share" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noopener">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.5 8h4V24h-4V8zM8 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24H8V8z"/></svg>
             Share on LinkedIn
           </a>
@@ -580,19 +606,13 @@ async function renderJobDetail(id) {
         <div class="section-content">${esc(advertBody)}</div>
       </div>` : ''}
 
-      ${requirements ? `
-      <div class="section-card">
-        <div class="section-label">Requirements</div>
-        <div class="section-content">${esc(requirements)}</div>
-      </div>` : ''}
-
       <div class="apply-form-section" id="apply-form-section">
         <div class="apply-form-title">Apply for this Role</div>
         <div class="apply-form-sub">Fill in your details below and we'll be in touch shortly.</div>
 
         <div id="form-error" class="alert-error"></div>
 
-        <form onsubmit="submitApplication(event, '${esc(id)}', '${esc(job.title)}')">
+        <form id="apply-form">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">First Name <span class="req">*</span></label>
@@ -623,9 +643,9 @@ async function renderJobDetail(id) {
           <div class="form-group">
             <label class="form-label">Upload Your CV <span style="color:#1a8cff">*</span></label>
             <label class="file-drop">
-              <input id="a_cv_url" type="file" accept=".pdf,.doc,.docx" required hidden>
+              <input id="a_cv_url" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required hidden>
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
-              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 8MB)</span>
+              <span class="file-drop-text">Click to upload your CV — PDF, DOC or DOCX (max 10MB)</span>
             </label>
           </div>
           <div class="form-group">
@@ -637,6 +657,31 @@ async function renderJobDetail(id) {
         </form>
       </div>
 
+    </div>`
+
+  document.getElementById('apply-btn').addEventListener('click', showApplyForm)
+  document.getElementById('copy-job-link').addEventListener('click', function () { copyJobLink(this) })
+  document.getElementById('apply-form').addEventListener('submit', submitApplication)
+}
+
+function locationOrigin() {
+  try { return window.location.origin } catch (e) { return 'https://astrustalent.com' }
+}
+
+function renderMissingJob(unavailable) {
+  currentJob = { id: '', title: '' }
+  document.getElementById('root').innerHTML = `
+    <div class="job-detail container">
+      <a href="jobs.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        All Jobs
+      </a>
+      <div class="state-box">
+        <p style="font-size:18px;font-weight:600;margin-bottom:8px">${unavailable ? 'This role is unavailable right now' : 'Role not found'}</p>
+        <p>${unavailable
+          ? 'Please try again shortly, or <a href="jobs.html" style="color:var(--blue)">view all open roles</a>.'
+          : 'This role may have been filled. <a href="jobs.html" style="color:var(--blue)">View all open roles</a>.'}</p>
+      </div>
     </div>`
 }
 
@@ -650,14 +695,24 @@ function showApplyForm() {
 }
 
 function copyJobLink(btn) {
-  var id = new URLSearchParams(location.search).get('job') || (location.pathname.split('/jobs/')[1]||'').replace(/\/$/,'');
-  var url = id ? location.origin + '/jobs/' + id : location.href;
-  var done = function () { var t = btn.querySelector('svg') ? 'Link copied' : 'Link copied'; btn.textContent = 'Link copied'; setTimeout(function () { location.reload && (btn.textContent = 'Copy link'); }, 1800); };
-  if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done).catch(function(){ prompt('Copy this link:', url); }); }
-  else { prompt('Copy this link:', url); }
+  var id = isUuid(currentJob.id) ? currentJob.id : '';
+  var url = id ? window.location.origin + '/jobs/' + id : window.location.href;
+  var done = function () {
+    btn.textContent = 'Link copied';
+    setTimeout(function () { btn.textContent = 'Copy link'; }, 1800);
+  };
+  if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done).catch(function(){ window.prompt('Copy this link:', url); }); }
+  else { window.prompt('Copy this link:', url); }
 }
 
-async function submitApplication(e, jobId, jobTitle) {
+function showFormError(btn, errEl, message) {
+  btn.disabled = false
+  btn.textContent = 'Submit Application'
+  errEl.textContent = message
+  errEl.style.display = 'block'
+}
+
+async function submitApplication(e) {
   e.preventDefault()
   const btn = document.getElementById('submit-btn')
   const errEl = document.getElementById('form-error')
@@ -665,61 +720,59 @@ async function submitApplication(e, jobId, jobTitle) {
   btn.textContent = 'Submitting…'
   errEl.style.display = 'none'
 
-  const firstName = document.getElementById('a_first_name').value.trim()
-  const lastName = document.getElementById('a_last_name').value.trim()
-  const email = document.getElementById('a_email').value.trim()
-
-  const up = await window.crmUploadCV(document.getElementById('a_cv_url').files[0])
-  if (!up.ok) {
-    btn.disabled = false
-    btn.textContent = 'Submit Application'
-    errEl.textContent = up.error + ' — or email us at info@astrustalent.com'
-    errEl.style.display = 'block'
+  if (!isUuid(currentJob.id) || !window.crmPrepare || !window.crmInsert || !window.crmUploadCV || !window.crmNotify) {
+    showFormError(btn, errEl, 'Something went wrong — please try again or email us at info@astrustalent.com')
     return
   }
 
-  const payload = {
-    job_id: jobId,
-    first_name: firstName,
-    last_name: lastName || null,
-    email,
+  const draft = {
+    job_id: currentJob.id,
+    first_name: document.getElementById('a_first_name').value,
+    last_name: document.getElementById('a_last_name').value,
+    email: document.getElementById('a_email').value,
     phone: window.astrusPhone(e.target),
-    linkedin_url: document.getElementById('a_linkedin_url').value.trim() || null,
-    cv_url: up.url,
-    cover_note: document.getElementById('a_cover_note').value.trim(),
+    linkedin_url: document.getElementById('a_linkedin_url').value,
+    cover_note: document.getElementById('a_cover_note').value
   }
-
-  const { error } = await db.from('job_applications').insert(payload)
-
-  if (error) {
-    btn.disabled = false
-    btn.textContent = 'Submit Application'
-    errEl.textContent = 'Something went wrong — please try again or email us at info@astrustalent.com'
-    errEl.style.display = 'block'
+  const prepared = window.crmPrepare('job_applications', draft, { partial: true })
+  if (!prepared.ok) {
+    showFormError(btn, errEl, prepared.error)
     return
   }
 
-  // Email a copy to info@astrustalent.com via Netlify Forms (fire-and-forget)
-  if (window.notifyEmail) {
-    window.notifyEmail('job-application', {
-      job_title: jobTitle,
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      phone: payload.phone,
-      linkedin_url: payload.linkedin_url,
-      cv_url: payload.cv_url,
-      cover_note: payload.cover_note
-    })
+  const fileInput = document.getElementById('a_cv_url')
+  const up = await window.crmUploadCV(fileInput && fileInput.files && fileInput.files[0])
+  if (!up.ok) {
+    showFormError(btn, errEl, up.error + ' — or email us at info@astrustalent.com')
+    return
   }
 
-  document.getElementById('apply-form-section').outerHTML = `
+  prepared.payload.cv_url = up.path
+  const saved = await window.crmInsert('job_applications', prepared.payload)
+  if (!saved.ok) {
+    showFormError(btn, errEl, saved.validation ? saved.error : 'Something went wrong — please try again or email us at info@astrustalent.com')
+    return
+  }
+
+  window.crmNotify('job-application', {
+    job_title: currentJob.title,
+    first_name: prepared.payload.first_name,
+    last_name: prepared.payload.last_name || '',
+    email: prepared.payload.email,
+    phone: prepared.payload.phone,
+    linkedin_url: prepared.payload.linkedin_url,
+    cv_url: up.path,
+    cover_note: prepared.payload.cover_note || ''
+  })
+
+  const section = document.getElementById('apply-form-section')
+  section.outerHTML = `
     <div class="success-box">
       <div class="success-icon">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div class="success-title">Application submitted</div>
-      <div class="success-sub">Thanks for applying, ${esc(firstName)}. A member of the Astrus Talent team will review your application and be in touch.</div>
+      <div class="success-sub">Thanks for applying, ${esc(prepared.payload.first_name)}. A member of the Astrus Talent team will review your application and be in touch.</div>
     </div>`
 }
 
@@ -730,8 +783,8 @@ document.getElementById('nav-toggle').addEventListener('click', () => {
 
 init()
 </script>
-  <script src="crm.js"></script>
-  <script src="forms.js"></script>
-  <script src="newsletter.js"></script>
+  <script src="/crm.js"></script>
+  <script src="/forms.js"></script>
+  <script src="/newsletter.js"></script>
 </body>
 </html>

@@ -248,7 +248,8 @@
       return window.crmSubmit(e.target, 'client_inquiries', function () {
         var role = val('c_role');
         var msg = val('c_message');
-        var notes = 'Role(s) hiring for: ' + role + '\nLinkedIn: ' + val('c_linkedin') + (msg ? '\n\n' + msg : '');
+        var linkedin = window.crmHttpUrl(val('c_linkedin'));
+        var notes = 'Role(s) hiring for: ' + role + '\nLinkedIn: ' + linkedin + (msg ? '\n\n' + msg : '');
         return {
           first_name: val('c_name'),
           company_name: val('c_company'),
