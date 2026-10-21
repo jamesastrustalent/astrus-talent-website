@@ -35,6 +35,29 @@
       .vrow { grid-template-columns: 1fr; gap: 24px; margin-bottom: 56px; }
       .vrow .vimg { order: -1; }
     }
+
+    .lifecycle { padding: 10px 0 100px; }
+    .lc-head { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+    .lc-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+    .lc-head h2 { font-size: clamp(26px, 3.2vw, 38px); color: #fff; line-height: 1.2; }
+    .lc-lead { display: flex; gap: 18px; align-items: flex-start; background: linear-gradient(90deg, rgba(26,140,255,0.14), rgba(26,140,255,0.04)); border: 1px solid var(--blue-border); border-radius: 14px; padding: 24px 28px; margin-bottom: 22px; }
+    .lc-lead .ic { width: 42px; height: 42px; border-radius: 10px; background: var(--blue-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .lc-lead .ic svg { width: 22px; height: 22px; stroke: var(--blue); }
+    .lc-lead h3 { font-size: 19px; color: #fff; margin-bottom: 6px; }
+    .lc-lead p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+    .lc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: lc; }
+    .lc-step { background: var(--card, #171a21); border: 1px solid var(--card-border); border-radius: 14px; padding: 26px 24px 22px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .lc-step::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, var(--blue), transparent); }
+    .lc-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 8px; }
+    .lc-step h3 { font-size: 21px; color: #fff; margin-bottom: 10px; }
+    .lc-step p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+    .lc-ai { margin-top: auto; border-top: 1px solid var(--card-border); padding-top: 14px; font-size: 14px; color: #c9d3df; line-height: 1.6; }
+    .lc-ai b { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+    @media (max-width: 1000px) { .lc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) {
+      .lc-grid { grid-template-columns: 1fr; }
+      .lc-lead { flex-direction: column; padding: 22px; }
+    }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
@@ -92,6 +115,60 @@
       <p class="page-eyebrow">Our Expertise</p>
       <h1>The Leaders Who Develop, Deliver and <span style="color:var(--blue)">Operate</span></h1>
       <p>Executive search and specialist recruitment across data centers, AI infrastructure and mission critical environments, from the boardroom to the build site.</p>
+    </div>
+  </section>
+
+  <section class="lifecycle" id="lifecycle">
+    <div class="container">
+      <div class="lc-head fade-up">
+        <p class="lc-eyebrow">The Build Lifecycle</p>
+        <h2>From first site visit to live operations, we support every stage.</h2>
+      </div>
+      <div class="lc-lead fade-up">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <div>
+          <h3>Leadership at every stage</h3>
+          <p>Every step needs someone accountable for it, from the development director securing the site to the operations leader keeping it live. Our executive search finds the people who own each stage and the leaders who run the whole programme.</p>
+        </div>
+      </div>
+      <div class="lc-grid">
+        <div class="lc-step fade-up">
+          <div class="lc-num">01</div>
+          <h3>Develop</h3>
+          <p>Finding the right land, securing power and permits, and building the business case. The decisions made here set the cost, timeline and capacity of everything that follows.</p>
+          <div class="lc-ai"><b>On AI campuses</b>Power is the constraint, and sites are chosen for gigawatt scale grid access.</div>
+        </div>
+        <div class="lc-step fade-up">
+          <div class="lc-num">02</div>
+          <h3>Design</h3>
+          <p>Turning the concept into a buildable facility across electrical, mechanical, cooling and structure, and ordering the long lead equipment early enough to protect the programme.</p>
+          <div class="lc-ai"><b>On AI campuses</b>Rack densities many times higher, with liquid cooling designed in from day one.</div>
+        </div>
+        <div class="lc-step fade-up">
+          <div class="lc-num">03</div>
+          <h3>Procure</h3>
+          <p>Choosing the contractors and supply chain, negotiating terms and locking in delivery slots in a market where equipment and labour are in short supply.</p>
+          <div class="lc-ai"><b>On AI campuses</b>GPUs, cooling and power equipment on allocation, not off the shelf.</div>
+        </div>
+        <div class="lc-step fade-up">
+          <div class="lc-num">04</div>
+          <h3>Build</h3>
+          <p>Delivering the shell and the electrical and mechanical fit out safely, on time and on budget, often across several phases running at once.</p>
+          <div class="lc-ai"><b>On AI campuses</b>Compressed programmes, with capacity live in months, not years.</div>
+        </div>
+        <div class="lc-step fade-up">
+          <div class="lc-num">05</div>
+          <h3>Commission</h3>
+          <p>Testing every system, in stages, up to a full test of the whole facility, to prove it performs before anything goes live.</p>
+          <div class="lc-ai"><b>On AI campuses</b>Testing liquid cooling and high density loads that most teams have never run.</div>
+        </div>
+        <div class="lc-step fade-up">
+          <div class="lc-num">06</div>
+          <h3>Operate</h3>
+          <p>Handing over to the operations team, onboarding tenants and keeping uptime high, then planning the next phase on the campus.</p>
+          <div class="lc-ai"><b>On AI campuses</b>GPU clusters that need a different kind of operations team.</div>
+        </div>
+      </div>
     </div>
   </section>
 

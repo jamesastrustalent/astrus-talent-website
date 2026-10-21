@@ -726,6 +726,25 @@
       transform: translateY(0);
     }
 
+
+    #lifecycle-teaser { padding: 20px 0 96px; }
+    .lt-sub { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto 44px; font-size: 17px; line-height: 1.7; }
+    .lt-track { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; position: relative; margin-bottom: 40px; }
+    .lt-track::before { content: ''; position: absolute; left: 6%; right: 6%; top: 21px; height: 1px; background: linear-gradient(90deg, transparent, var(--blue-border), var(--blue-border), transparent); }
+    .lt-step { text-align: center; position: relative; }
+    .lt-dot { width: 42px; height: 42px; margin: 0 auto 16px; border-radius: 50%; background: #0e1115; border: 1px solid var(--blue-border); display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; color: var(--blue); position: relative; }
+    .lt-step h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: var(--text); margin-bottom: 6px; }
+    .lt-step p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+    .lt-cta { text-align: center; }
+    @media (max-width: 960px) {
+      .lt-track { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
+      .lt-track::before { display: none; }
+    }
+    @media (max-width: 640px) {
+      #lifecycle-teaser { padding: 0 0 72px; }
+      .lt-track { grid-template-columns: 1fr 1fr; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .expertise-grid { grid-template-columns: 1fr; }
@@ -901,6 +920,53 @@
               <span class="card-title">Commercial &amp; Sustainability</span>
             </div>
           </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE TEASER -->
+  <section id="lifecycle-teaser">
+    <div class="container">
+      <p class="section-eyebrow fade-up">Every Stage of the Build</p>
+      <h2 class="section-title fade-up">From First Site Visit to Live Operations</h2>
+      <p class="lt-sub fade-up">Leadership and specialist talent for every stage of a data center or AI campus build, from securing the land to keeping it live.</p>
+      <div class="lt-track">
+        <div class="lt-step fade-up">
+          <div class="lt-dot">01</div>
+          <h3>Develop</h3>
+          <p>Land, power and permits</p>
+        </div>
+        <div class="lt-step fade-up">
+          <div class="lt-dot">02</div>
+          <h3>Design</h3>
+          <p>Concept to buildable facility</p>
+        </div>
+        <div class="lt-step fade-up">
+          <div class="lt-dot">03</div>
+          <h3>Procure</h3>
+          <p>Contractors and long lead equipment</p>
+        </div>
+        <div class="lt-step fade-up">
+          <div class="lt-dot">04</div>
+          <h3>Build</h3>
+          <p>Shell and fit out, on programme</p>
+        </div>
+        <div class="lt-step fade-up">
+          <div class="lt-dot">05</div>
+          <h3>Commission</h3>
+          <p>Proving every system performs</p>
+        </div>
+        <div class="lt-step fade-up">
+          <div class="lt-dot">06</div>
+          <h3>Operate</h3>
+          <p>Handover, uptime and expansion</p>
+        </div>
+      </div>
+      <div class="lt-cta fade-up">
+        <a href="expertise.html#lifecycle" class="btn-hero-primary">
+          Explore Our Expertise
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
