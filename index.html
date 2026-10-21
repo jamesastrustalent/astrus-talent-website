@@ -528,37 +528,33 @@
       line-height: 1.7;
     }
 
-    .focus-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 14px 28px;
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
       max-width: 980px;
       margin: 0 auto;
+      text-align: left;
     }
 
-    .focus-label {
-      position: relative;
+    .focus-card {
+      background: rgba(23,26,33,0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 28px 28px 32px;
+    }
+
+    .focus-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-weight: 500;
-      font-size: 15px;
-      color: #e8ebf1;
-      border: 1px solid rgba(255,255,255,0.28);
-      border-radius: 999px;
-      padding: 10px 18px;
-      background: rgba(6,10,22,0.45);
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 12px;
     }
 
-    .focus-label:not(:last-child)::after {
-      content: '·';
-      position: absolute;
-      right: -18px;
-      top: 50%;
-      transform: translateY(-54%);
-      color: var(--blue);
-      font-size: 18px;
-      line-height: 1;
+    .focus-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
     /* ── TALK TO AN EXPERT ── */
@@ -771,8 +767,7 @@
     }
 
     @media (max-width: 720px) {
-      .focus-row { gap: 12px; }
-      .focus-label:not(:last-child)::after { content: none; }
+      .focus-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -877,12 +872,31 @@
       <p class="section-eyebrow fade-up">Core Focus</p>
       <h2 class="section-title fade-up">Where We Focus</h2>
       <p class="focus-lead fade-up">Executive and senior search across data center and AI infrastructure, including project, construction and operations hiring.</p>
-      <div class="focus-row fade-up" aria-label="Core focus areas">
-        <span class="focus-label">Data Center</span>
-        <span class="focus-label">Construction &amp; Design</span>
-        <span class="focus-label">Critical Facilities &amp; Operations</span>
-        <span class="focus-label">IT, Infrastructure &amp; Cloud</span>
-        <span class="focus-label">AI Infrastructure</span>
+      <div class="focus-grid">
+        <article class="focus-card fade-up">
+          <h3>Executive Search</h3>
+          <p>We're very experienced in executive level placements, from VP and C suite onward. It's something we specialize in as a business, and we understand the nuances, process and structure that come with a search like this. We handle these searches with care for data center and AI infrastructure leadership teams.</p>
+        </article>
+        <article class="focus-card fade-up">
+          <h3>AI Infrastructure</h3>
+          <p>We help leadership teams hire for AI infrastructure, including high density GPU deployments, liquid cooling and sites where power is the constraint. This is work we know closely, and we understand how quickly these projects move. We stay with the search from the brief through to the people who will run it.</p>
+        </article>
+        <article class="focus-card fade-up">
+          <h3>Data Center</h3>
+          <p>We focus on the people who develop data centers, from an early site through to a campus that is ready to operate. This sits at the center of what we do, and we understand how these projects come together. We support the leadership teams growing that capacity, and the senior people around them.</p>
+        </article>
+        <article class="focus-card fade-up">
+          <h3>Construction and Design</h3>
+          <p>We support searches across construction and design for data center and AI infrastructure projects. We understand how design, engineering and the build sit together. We work with the teams who turn a plan into a site that can actually be delivered.</p>
+        </article>
+        <article class="focus-card fade-up">
+          <h3>Critical Facilities and Operations</h3>
+          <p>We hire for the people who keep critical facilities running, safely and reliably. Operations in this environment asks for precision, and we understand the responsibility that comes with it. We support leadership teams who are building that capability or running it day to day.</p>
+        </article>
+        <article class="focus-card fade-up">
+          <h3>IT, Infrastructure and Cloud</h3>
+          <p>We cover IT, infrastructure and cloud hiring for data center and AI infrastructure businesses. These searches sit at the center of how a platform is designed, built and kept running. We know the language of that work, and we search with it in mind.</p>
+        </article>
       </div>
     </div>
   </section>
