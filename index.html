@@ -11,26 +11,26 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Astrus Talent is a global data center recruitment specialist placing engineers, operators, and executives across hyperscale, colocation, and mission critical infrastructure. UK and UAE offices.">
-  <meta name="keywords" content="data center recruitment, data centre jobs, hyperscale recruitment, colocation jobs, mission critical staffing, data center headhunter, UK UAE data center talent">
+  <meta name="description" content="Astrus Talent is a global executive search and recruitment specialist for data centers, AI infrastructure, hyperscale and mission critical environments, from leadership to construction to operations.">
+  <meta name="keywords" content="data center recruitment, AI infrastructure recruitment, data center executive search, AI data center jobs, hyperscale recruitment, neocloud recruitment, colocation jobs, mission critical staffing, data center headhunter">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0f1420">
 
-  <title>Astrus Talent | Global Data Center Recruitment Specialists</title>
+  <title>Astrus Talent | Data Center and AI Infrastructure Recruitment Specialists</title>
 
   <link rel="canonical" href="https://astrustalent.com/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://astrustalent.com/">
-  <meta property="og:title" content="Astrus Talent | Global Data Center Recruitment Specialists">
-  <meta property="og:description" content="Specialist recruitment across Data Centers, hyperscale, and mission critical environments. From construction to operations to leadership.">
+  <meta property="og:title" content="Astrus Talent | Data Center and AI Infrastructure Recruitment Specialists">
+  <meta property="og:description" content="Executive search and specialist recruitment across data centers, AI infrastructure, hyperscale and mission critical environments. From leadership to construction to operations.">
   <meta property="og:site_name" content="Astrus Talent">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Astrus Talent | Global Data Center Recruitment">
-  <meta name="twitter:description" content="Global specialist recruitment for data center and mission critical infrastructure. UK and UAE offices, EMEA reach.">
+  <meta name="twitter:title" content="Astrus Talent | Data Center and AI Infrastructure Recruitment">
+  <meta name="twitter:description" content="Global executive search and specialist recruitment for data centers, AI infrastructure and mission critical environments.">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -42,7 +42,7 @@
         "@id": "https://astrustalent.com/#organization",
         "name": "Astrus Talent",
         "url": "https://astrustalent.com/",
-        "description": "Global specialist recruitment firm for data center and mission critical infrastructure.",
+        "description": "Global executive search and specialist recruitment firm for data centers, AI infrastructure and mission critical environments.",
         "areaServed": ["GB", "AE", "EU", "EMEA"],
         "sameAs": ["https://www.linkedin.com/company/astrus-talent"],
         "contactPoint": [
@@ -385,6 +385,11 @@
       transition: border-color 0.2s, transform 0.2s;
     }
 
+    a.expertise-card { display:block; text-decoration:none; color:inherit; }
+    .expertise-card .card-header { margin-bottom:0; }
+    .expertise-card .card-body { padding:24px 28px; }
+    .expertise-grid { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 960px) { .expertise-grid { grid-template-columns: repeat(2, 1fr); } }
     .expertise-card:hover {
       border-color: var(--blue-border);
       transform: translateY(-3px);
@@ -736,6 +741,9 @@
       .nav-links-desktop { display: none; }
       .nav-toggle { display: flex; }
       .hero-ctas { flex-direction: column; align-items: center; }
+      .global-inner > * { min-width: 0; }
+      .globe-mask { width: min(460px, 100%); height: auto; aspect-ratio: 1; }
+      #globeCanvas { width: 100%; height: auto; }
     }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -744,7 +752,7 @@
   <meta property="og:image" content="https://astrustalent.com/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Astrus Talent — Global Data Center Recruitment Specialists">
+  <meta property="og:image:alt" content="Astrus Talent, data center and AI infrastructure recruitment specialists">
   <meta name="twitter:image" content="https://astrustalent.com/og-image.png">
 </head>
 <body>
@@ -792,13 +800,13 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Global Data Center Recruitment Specialists</p>
+      <p class="hero-eyebrow">Data Center and AI Infrastructure Recruitment Specialists</p>
       <h1 class="hero-title">
         Powering the Talent<br>
         Behind the World's <span class="accent">Digital<br>Infrastructure</span>
       </h1>
       <p class="hero-sub">
-        Specialist recruitment across Data Centers, hyperscale, and mission-critical environments. From construction to operations to leadership.
+        Executive search and specialist recruitment across data centers, AI infrastructure, hyperscale and mission critical environments. From leadership to construction to operations.
       </p>
       <div class="hero-ctas">
         <a href="contact.html#contact-form" class="btn-hero-primary">
@@ -814,9 +822,9 @@
   <section id="what-we-do">
     <div class="container">
       <p class="section-eyebrow fade-up">What We Do</p>
-      <h2 class="section-title fade-up">Mission-Critical Talent</h2>
+      <h2 class="section-title fade-up">Mission Critical Talent</h2>
       <p class="what-we-do-lead fade-up">
-        We specialise in placing talent across the full Data Center lifecycle, from construction and design through to operations and executive leadership. Our niche focus means we understand the technical demands, the urgency of uptime, and the calibre of people required to keep the world's digital infrastructure running.
+        We specialise in leadership and executive search across the full data center and AI infrastructure lifecycle, from development and construction through to operations, alongside the specialist teams behind them. Our niche focus means we understand the technical demands, the urgency of uptime, and the calibre of people required to build and run the world's digital infrastructure.
       </p>
     </div>
   </section>
@@ -828,60 +836,7 @@
       <h2 class="section-title fade-up" style="margin-bottom:56px;">Core Focus Areas</h2>
 
       <div class="expertise-grid">
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/construction-site.jpg" alt="Data Center Construction & Design" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon orange">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-              </div>
-              <span class="card-title">Data Center Construction &amp; Design</span>
-            </div>
-            <ul class="card-list">
-              <li>Project Managers</li>
-              <li>Electrical &amp; Mechanical Engineers</li>
-              <li>Commissioning Engineers</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/critical-facilities.jpg" alt="Critical Facilities & Operations" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon purple">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-              </div>
-              <span class="card-title">Critical Facilities &amp; Operations</span>
-            </div>
-            <ul class="card-list">
-              <li>Critical Facilities Engineers</li>
-              <li>Data Center Technicians</li>
-              <li>Facilities Managers</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/fiber-optics.jpg" alt="IT Infrastructure & Cloud" loading="lazy">
-          <div class="card-body">
-            <div class="card-header">
-              <div class="card-icon green">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-              </div>
-              <span class="card-title">IT Infrastructure &amp; Cloud</span>
-            </div>
-            <ul class="card-list">
-              <li>Cloud Engineers</li>
-              <li>Network Engineers</li>
-              <li>Systems Engineers</li>
-            </ul>
-            <p class="card-supporting">Supporting: Amazon Web Services · Microsoft Azure</p>
-          </div>
-        </div>
-
-        <div class="expertise-card fade-up">
+        <a href="expertise.html" class="expertise-card fade-up">
           <img class="card-image" src="images/executive-meeting.jpg" alt="Executive Search" loading="lazy">
           <div class="card-body">
             <div class="card-header">
@@ -890,16 +845,54 @@
               </div>
               <span class="card-title">Executive Search</span>
             </div>
-            <ul class="card-list">
-              <li>Directors</li>
-              <li>VP / C-Level</li>
-              <li>Heads of Infrastructure</li>
-            </ul>
           </div>
-        </div>
-
-        <div class="expertise-card fade-up">
-          <img class="card-image" src="images/sustainable-energy.jpg" alt="Commercial & Sustainability" loading="lazy">
+        </a>
+        <a href="expertise.html" class="expertise-card fade-up">
+          <img class="card-image" src="images/ai-infrastructure.jpg" alt="AI Infrastructure" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+              </div>
+              <span class="card-title">AI Infrastructure</span>
+            </div>
+          </div>
+        </a>
+        <a href="expertise.html" class="expertise-card fade-up">
+          <img class="card-image" src="images/construction-site.jpg" alt="Data Center Construction &amp; Design" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon orange">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <span class="card-title">Data Center Construction &amp; Design</span>
+            </div>
+          </div>
+        </a>
+        <a href="expertise.html" class="expertise-card fade-up">
+          <img class="card-image" src="images/critical-facilities.jpg" alt="Critical Facilities &amp; Operations" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              </div>
+              <span class="card-title">Critical Facilities &amp; Operations</span>
+            </div>
+          </div>
+        </a>
+        <a href="expertise.html" class="expertise-card fade-up">
+          <img class="card-image" src="images/fiber-optics.jpg" alt="IT Infrastructure &amp; Cloud" loading="lazy">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="card-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+              </div>
+              <span class="card-title">IT Infrastructure &amp; Cloud</span>
+            </div>
+          </div>
+        </a>
+        <a href="expertise.html" class="expertise-card fade-up">
+          <img class="card-image" src="images/sustainable-energy.jpg" alt="Commercial &amp; Sustainability" loading="lazy">
           <div class="card-body">
             <div class="card-header">
               <div class="card-icon teal">
@@ -907,14 +900,8 @@
               </div>
               <span class="card-title">Commercial &amp; Sustainability</span>
             </div>
-            <ul class="card-list">
-              <li>Sales Leaders</li>
-              <li>Energy Efficiency Specialists</li>
-              <li>Business Development</li>
-            </ul>
           </div>
-        </div>
-
+        </a>
       </div>
     </div>
   </section>
@@ -926,7 +913,7 @@
         <div class="global-content fade-up">
           <p class="section-eyebrow" style="text-align:left;">Global Reach</p>
           <h2 class="section-title" style="text-align:left;">Delivering Talent Globally.</h2>
-          <p>We support hyperscale providers, colocation operators, and construction firms across the globe. Our worldwide network ensures access to the best mission-critical talent wherever they are.</p>
+          <p>We support hyperscalers, neoclouds, AI infrastructure developers, colocation operators and construction firms across the globe. Our worldwide network ensures access to the best data center, AI infrastructure and mission critical talent wherever they are.</p>
         </div>
         <div class="globe-wrap fade-up">
           <div class="globe-mask">
@@ -945,7 +932,7 @@
       </div>
       <h2 class="section-title fade-up">Talk to an Expert</h2>
       <p class="section-sub fade-up" style="margin-bottom:36px;">
-        Have a hiring need or looking for your next role in Data Centers? Chat directly with our team on WhatsApp for a fast, confidential conversation.
+        Have a hiring need or looking for your next role in data centers or AI infrastructure? Chat directly with our team on WhatsApp for a fast, confidential conversation.
       </p>
       <div style="text-align:center;">
         <a href="https://wa.me/971585536439" target="_blank" rel="noopener" class="btn-whatsapp fade-up">
@@ -959,8 +946,8 @@
   <!-- CTA BAND -->
   <section id="cta-band">
     <div class="container">
-      <h2 class="cta-band-title fade-up">Partner with a Specialist in <span style="color:var(--blue)">Mission-Critical Recruitment</span></h2>
-      <p class="cta-band-sub fade-up">Whether you're scaling operations, building new facilities, or hiring leadership, we deliver the talent that keeps the world connected.</p>
+      <h2 class="cta-band-title fade-up">Build Bold. <span style="color:var(--blue)">Hire Sharper.</span></h2>
+      <p class="cta-band-sub fade-up">Whether you're hiring leadership, building new data centers and AI campuses, or scaling operations, we deliver the talent that keeps the world connected.</p>
       <div class="cta-band-buttons fade-up">
         <a href="contact.html#contact-form" class="btn-hero-primary">
           Request Talent
@@ -978,7 +965,7 @@
 
         <div class="footer-brand">
           <a href="#" class="wordmark">ASTRUS<span class="dot"></span></a>
-          <p>Global Data Center recruitment specialists.</p>
+          <p>Global data center and AI infrastructure recruitment specialists.</p>
         </div>
 
         <div class="footer-col">
@@ -996,10 +983,11 @@
         <div class="footer-col">
           <h4>Sectors</h4>
           <ul>
+            <li><a href="expertise.html">Executive Search</a></li>
+            <li><a href="expertise.html">AI Infrastructure</a></li>
             <li><a href="expertise.html">Data Center Construction</a></li>
             <li><a href="expertise.html">Critical Facilities</a></li>
             <li><a href="expertise.html">IT Infrastructure &amp; Cloud</a></li>
-            <li><a href="expertise.html">Executive Search</a></li>
           </ul>
         </div>
 
